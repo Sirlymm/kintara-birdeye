@@ -21,7 +21,6 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(--navy); min-height: 100vh; }
 
-  /* HERO */
   .hero {
     background: linear-gradient(135deg, #5BAADC 0%, #3d8fbf 50%, #1A2B3C 100%);
     padding: 32px 20px 40px;
@@ -35,97 +34,24 @@
     inset: 0;
     background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   }
-  .hero-badge {
-    display: inline-block;
-    background: var(--gold);
-    color: var(--navy);
-    font-family: 'Fredoka One', cursive;
-    font-size: 12px;
-    letter-spacing: 2px;
-    padding: 4px 14px;
-    border-radius: 20px;
-    margin-bottom: 12px;
-    text-transform: uppercase;
-  }
-  .hero h1 {
-    font-family: 'Fredoka One', cursive;
-    font-size: clamp(2.2rem, 6vw, 3.8rem);
-    color: #fff;
-    line-height: 1.1;
-    margin-bottom: 8px;
-    text-shadow: 0 3px 12px rgba(0,0,0,0.25);
-  }
+  .hero-badge { display: inline-block; background: var(--gold); color: var(--navy); font-family: 'Fredoka One', cursive; font-size: 12px; letter-spacing: 2px; padding: 4px 14px; border-radius: 20px; margin-bottom: 12px; text-transform: uppercase; }
+  .hero h1 { font-family: 'Fredoka One', cursive; font-size: clamp(2.2rem, 6vw, 3.8rem); color: #fff; line-height: 1.1; margin-bottom: 8px; text-shadow: 0 3px 12px rgba(0,0,0,0.25); }
   .hero h1 span { color: var(--gold); }
   .hero p { color: rgba(255,255,255,0.85); font-size: 1rem; font-weight: 600; margin-bottom: 20px; }
   .hero-badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-  .safe-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(123,198,126,0.25);
-    border: 2px solid var(--green);
-    color: #fff;
-    font-weight: 800;
-    font-size: 0.85rem;
-    padding: 8px 18px;
-    border-radius: 50px;
-  }
-  .twitter-follow-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #000;
-    border: 2px solid #333;
-    color: #fff;
-    font-weight: 800;
-    font-size: 0.85rem;
-    padding: 8px 18px;
-    border-radius: 50px;
-    text-decoration: none;
-    transition: background 0.2s, transform 0.15s;
-  }
+  .safe-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(123,198,126,0.25); border: 2px solid var(--green); color: #fff; font-weight: 800; font-size: 0.85rem; padding: 8px 18px; border-radius: 50px; }
+  .twitter-follow-btn { display: inline-flex; align-items: center; gap: 8px; background: #000; border: 2px solid #333; color: #fff; font-weight: 800; font-size: 0.85rem; padding: 8px 18px; border-radius: 50px; text-decoration: none; transition: background 0.2s, transform 0.15s; }
   .twitter-follow-btn:hover { background: #222; transform: translateY(-2px); }
   .twitter-follow-btn svg { width: 16px; height: 16px; fill: #fff; }
 
-  .safe-bar {
-    background: #e8f8e8;
-    border-bottom: 2px solid #b8e6b8;
-    padding: 10px 20px;
-    text-align: center;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: #2d7a2d;
-  }
+  .safe-bar { background: #e8f8e8; border-bottom: 2px solid #b8e6b8; padding: 10px 20px; text-align: center; font-size: 0.85rem; font-weight: 700; color: #2d7a2d; }
 
   .container { max-width: 1100px; margin: 0 auto; padding: 32px 16px; }
-
-  .section-title {
-    font-family: 'Fredoka One', cursive;
-    font-size: 1.5rem;
-    color: var(--navy);
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .section-title::after {
-    content: '';
-    flex: 1;
-    height: 3px;
-    background: linear-gradient(90deg, var(--sky), transparent);
-    border-radius: 2px;
-  }
+  .section-title { font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: var(--navy); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+  .section-title::after { content: ''; flex: 1; height: 3px; background: linear-gradient(90deg, var(--sky), transparent); border-radius: 2px; }
 
   .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 24px; }
-
-  .card {
-    background: var(--card);
-    border-radius: var(--radius);
-    padding: 20px;
-    box-shadow: var(--shadow);
-    border: 2px solid transparent;
-    transition: transform 0.2s, border-color 0.2s;
-  }
+  .card { background: var(--card); border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow); border: 2px solid transparent; transition: transform 0.2s, border-color 0.2s; }
   .card:hover { transform: translateY(-3px); border-color: var(--sky); }
   .card-icon { font-size: 2rem; margin-bottom: 8px; display: block; }
   .card-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: #8899aa; margin-bottom: 4px; }
@@ -136,48 +62,17 @@
   .card.green-card { border-color: var(--green); background: linear-gradient(135deg, #edfff0, #fff); }
   .card.red-card { border-color: var(--red); background: linear-gradient(135deg, #fff0f0, #fff); }
 
-  /* BLIMP */
   .blimp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 24px; }
-  .blimp-card {
-    background: linear-gradient(135deg, var(--navy), #2a3f5c);
-    border-radius: 16px;
-    padding: 16px;
-    color: #fff;
-    text-align: center;
-  }
+  .blimp-card { background: linear-gradient(135deg, var(--navy), #2a3f5c); border-radius: 16px; padding: 16px; color: #fff; text-align: center; }
   .blimp-card .b-val { font-family: 'Fredoka One', cursive; font-size: 1.6rem; color: var(--gold); }
   .blimp-card .b-label { font-size: 0.72rem; color: rgba(255,255,255,0.7); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
 
-  /* MERCHANT */
-  .merchant-card {
-    background: linear-gradient(135deg, #fff8e1, #fff);
-    border: 3px solid var(--gold);
-    border-radius: var(--radius);
-    padding: 24px;
-    margin-bottom: 24px;
-    box-shadow: var(--shadow);
-  }
+  .merchant-card { background: linear-gradient(135deg, #fff8e1, #fff); border: 3px solid var(--gold); border-radius: var(--radius); padding: 24px; margin-bottom: 24px; box-shadow: var(--shadow); }
   .merchant-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; flex-wrap: wrap; }
-  .merchant-avatar {
-    font-size: 3rem;
-    background: var(--gold);
-    border-radius: 50%;
-    width: 64px; height: 64px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
+  .merchant-avatar { font-size: 3rem; background: var(--gold); border-radius: 50%; width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .merchant-title { font-family: 'Fredoka One', cursive; font-size: 1.4rem; color: var(--navy); }
   .merchant-subtitle { font-size: 0.85rem; color: #888; font-weight: 600; margin-top: 2px; }
-  .merchant-status {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 800;
-    margin-left: auto;
-  }
+  .merchant-status { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; margin-left: auto; }
   .status-empty { background: #ffe5e5; color: var(--red); }
   .status-active { background: #e5ffe8; color: #27ae60; }
 
@@ -187,60 +82,25 @@
   .resource-count { font-size: 0.8rem; color: #888; font-weight: 700; }
   .resource-pct { font-family: 'Fredoka One', cursive; font-size: 1rem; color: var(--navy); }
   .bar-track { width: 100%; height: 18px; background: #f0f0f0; border-radius: 20px; overflow: hidden; border: 2px solid #e0e0e0; }
-  .bar-fill {
-    height: 100%;
-    border-radius: 20px;
-    transition: width 1.2s ease;
-    position: relative;
-    overflow: hidden;
-  }
-  .bar-fill::after {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 60%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-    animation: shimmer 2s infinite;
-  }
+  .bar-fill { height: 100%; border-radius: 20px; transition: width 1.2s ease; position: relative; overflow: hidden; }
+  .bar-fill::after { content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); animation: shimmer 2s infinite; }
   @keyframes shimmer { to { left: 200%; } }
   .bar-wood { background: linear-gradient(90deg, #8B6914, #C69C2E); }
   .bar-stone { background: linear-gradient(90deg, #6b6b6b, #aaa); }
   .bar-coal { background: linear-gradient(90deg, #333, #666); }
   .bar-fish { background: linear-gradient(90deg, #1a6a9a, #5BAADC); }
 
-  .merchant-eta {
-    margin-top: 20px;
-    background: var(--navy);
-    border-radius: 14px;
-    padding: 16px 20px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
+  .merchant-eta { margin-top: 20px; background: var(--navy); border-radius: 14px; padding: 16px 20px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
   .eta-icon { font-size: 2rem; }
   .eta-label { font-size: 0.75rem; color: rgba(255,255,255,0.6); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
   .eta-value { font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: var(--gold); }
   .eta-note { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 2px; }
 
-  /* TABLE */
   .trade-table-wrap { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; margin-bottom: 24px; }
-  .trade-table-header {
-    background: var(--navy);
-    padding: 14px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
+  .trade-table-header { background: var(--navy); padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; }
   .trade-table-header span { font-family: 'Fredoka One', cursive; font-size: 1.1rem; color: #fff; }
   .live-dot { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--green); font-weight: 700; }
-  .live-dot::before {
-    content: '';
-    width: 8px; height: 8px;
-    background: var(--green);
-    border-radius: 50%;
-    animation: pulse 1.5s infinite;
-  }
+  .live-dot::before { content: ''; width: 8px; height: 8px; background: var(--green); border-radius: 50%; animation: pulse 1.5s infinite; }
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)} }
   table { width: 100%; border-collapse: collapse; }
   thead th { background: #f8f9fa; padding: 10px 16px; text-align: left; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #8899aa; border-bottom: 2px solid #eee; }
@@ -250,22 +110,12 @@
   .tag { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; }
   .tag-gold { background: #fff3cd; color: #b8860b; }
   .tag-mount { background: #e8d5ff; color: #7c3aed; }
+  .tag-token { background: #d4edda; color: #155724; }
 
-  /* LOOKUP */
   .lookup-card { background: var(--card); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); margin-bottom: 24px; border: 2px solid var(--sky); }
   .lookup-title { font-family: 'Fredoka One', cursive; font-size: 1.3rem; margin-bottom: 16px; }
   .lookup-form { display: flex; gap: 10px; flex-wrap: wrap; }
-  .lookup-input {
-    flex: 1; min-width: 200px;
-    padding: 12px 18px;
-    border: 2px solid #e0e0e0;
-    border-radius: 50px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 700;
-    outline: none;
-    transition: border-color 0.2s;
-  }
+  .lookup-input { flex: 1; min-width: 200px; padding: 12px 18px; border: 2px solid #e0e0e0; border-radius: 50px; font-family: 'Nunito', sans-serif; font-size: 0.95rem; font-weight: 700; outline: none; transition: border-color 0.2s; }
   .lookup-input:focus { border-color: var(--sky); }
   .btn { padding: 12px 24px; border-radius: 50px; border: none; cursor: pointer; font-family: 'Fredoka One', cursive; font-size: 1rem; transition: transform 0.15s, box-shadow 0.15s; }
   .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
@@ -273,14 +123,12 @@
   .lookup-result { margin-top: 16px; padding: 16px; background: #f8fbff; border-radius: 14px; display: none; }
   .lookup-result.show { display: block; }
 
-  /* WHALES */
   .whale-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
   .whale-row { display: flex; align-items: center; gap: 12px; background: var(--card); border-radius: 14px; padding: 12px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); border-left: 4px solid var(--gold); }
   .whale-rank { font-family: 'Fredoka One', cursive; font-size: 1.2rem; color: var(--gold); width: 28px; text-align: center; }
   .whale-name { font-weight: 800; flex: 1; }
   .whale-gold { font-family: 'Fredoka One', cursive; color: var(--navy); font-size: 1.1rem; }
 
-  /* BOT */
   .bot-meter-card { background: linear-gradient(135deg, #fff0f0, #fff); border: 2px solid var(--red); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); margin-bottom: 24px; }
   .bot-meter-title { font-family: 'Fredoka One', cursive; font-size: 1.3rem; margin-bottom: 16px; }
   .bot-gauge-wrap { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
@@ -291,25 +139,14 @@
   .bot-detail-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem; font-weight: 700; }
   .bot-note { font-size: 0.75rem; color: #aaa; margin-top: 10px; font-style: italic; }
 
-  /* P2P */
   .p2p-row { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-bottom: 1px solid #f0f0f0; font-size: 0.85rem; font-weight: 600; flex-wrap: wrap; }
   .p2p-row:last-child { border-bottom: none; }
   .p2p-from { color: var(--red); flex: 1; min-width: 80px; }
   .p2p-arrow { color: #bbb; font-size: 1.2rem; }
   .p2p-to { color: var(--green); flex: 1; min-width: 80px; }
   .p2p-item { background: #f0f0f0; border-radius: 8px; padding: 2px 8px; font-size: 0.75rem; }
-  .p2p-time { color: #bbb; font-size: 0.72rem; }
 
-  /* TIP */
-  .tip-card {
-    background: linear-gradient(135deg, var(--navy), #2a4a6b);
-    border-radius: var(--radius);
-    padding: 32px;
-    box-shadow: var(--shadow);
-    margin-bottom: 32px;
-    text-align: center;
-    color: #fff;
-  }
+  .tip-card { background: linear-gradient(135deg, var(--navy), #2a4a6b); border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow); margin-bottom: 32px; text-align: center; color: #fff; }
   .tip-title { font-family: 'Fredoka One', cursive; font-size: 1.8rem; color: var(--gold); margin-bottom: 8px; }
   .tip-sub { color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-bottom: 24px; }
   .tip-options { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
@@ -319,37 +156,11 @@
   .copy-btn { background: var(--gold); color: var(--navy); border: none; border-radius: 50px; padding: 8px 18px; font-family: 'Fredoka One', cursive; font-size: 0.9rem; cursor: pointer; transition: transform 0.15s; width: 100%; }
   .copy-btn:hover { transform: scale(1.03); }
 
-  /* FOLLOW BANNER */
-  .follow-banner {
-    background: linear-gradient(135deg, #000, #1a1a2e);
-    border-radius: var(--radius);
-    padding: 20px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-bottom: 32px;
-    border: 2px solid #333;
-  }
+  .follow-banner { background: linear-gradient(135deg, #000, #1a1a2e); border-radius: var(--radius); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 32px; border: 2px solid #333; }
   .follow-text { color: #fff; }
   .follow-text strong { font-family: 'Fredoka One', cursive; font-size: 1.2rem; color: var(--gold); display: block; }
   .follow-text span { font-size: 0.85rem; color: rgba(255,255,255,0.6); }
-  .follow-x-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: #fff;
-    color: #000;
-    font-family: 'Fredoka One', cursive;
-    font-size: 1rem;
-    padding: 12px 24px;
-    border-radius: 50px;
-    text-decoration: none;
-    transition: transform 0.15s, box-shadow 0.15s;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
+  .follow-x-btn { display: inline-flex; align-items: center; gap: 10px; background: #fff; color: #000; font-family: 'Fredoka One', cursive; font-size: 1rem; padding: 12px 24px; border-radius: 50px; text-decoration: none; transition: transform 0.15s, box-shadow 0.15s; white-space: nowrap; flex-shrink: 0; }
   .follow-x-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,255,255,0.2); }
   .follow-x-btn svg { width: 18px; height: 18px; fill: #000; }
 
@@ -396,7 +207,6 @@
     <span id="last-updated">Fetching live data...</span>
   </div>
 
-  <!-- KINS STATS -->
   <div class="section-title">🪙 KINS Token Stats</div>
   <div class="blimp-grid" id="blimp-grid">
     <div class="blimp-card"><span class="skeleton"></span><div class="b-label">Gold Price (KINS)</div></div>
@@ -405,7 +215,6 @@
     <div class="blimp-card"><span class="skeleton"></span><div class="b-label">Market Cap</div></div>
   </div>
 
-  <!-- SNAPSHOT -->
   <div class="section-title">📊 Live Economy Snapshot</div>
   <div class="grid-4">
     <div class="card gold-card">
@@ -429,12 +238,11 @@
     <div class="card red-card">
       <span class="card-icon">⏱️</span>
       <div class="card-label">Avg Session</div>
-      <div class="card-value" id="avg-session"><span class="skeleton"></span></div>
+      <div class="card-value" id="avg-session">~2</div>
       <div class="card-sub">hrs per player</div>
     </div>
   </div>
 
-  <!-- MERCHANT -->
   <div class="section-title">🛒 Traveling Merchant Tracker</div>
   <div class="merchant-card">
     <div class="merchant-header">
@@ -500,7 +308,6 @@
     </div>
   </div>
 
-  <!-- MARKETPLACE -->
   <div class="section-title">🏪 Live Marketplace Trades</div>
   <div class="trade-table-wrap">
     <div class="trade-table-header">
@@ -523,13 +330,11 @@
     </table>
   </div>
 
-  <!-- WHALES -->
   <div class="section-title">🐋 Gold Whales</div>
   <div class="whale-list" id="whale-list">
     <div style="text-align:center;padding:20px;color:#aaa">Loading whale data...</div>
   </div>
 
-  <!-- BOT -->
   <div class="section-title">🤖 Bot Activity Meter</div>
   <div class="bot-meter-card">
     <div class="bot-meter-title">🤖 Suspected Bot Activity</div>
@@ -548,7 +353,6 @@
     </div>
   </div>
 
-  <!-- PLAYER LOOKUP -->
   <div class="section-title">🔍 Player Trade Lookup</div>
   <div class="lookup-card">
     <div class="lookup-title">🎮 Search a Player's Recent Trades</div>
@@ -561,7 +365,6 @@
     </div>
   </div>
 
-  <!-- P2P -->
   <div class="section-title">🤝 Player-to-Player Exchanges</div>
   <div class="trade-table-wrap">
     <div class="trade-table-header">
@@ -575,7 +378,6 @@
 
   <div style="margin-bottom:32px"></div>
 
-  <!-- TIP -->
   <div class="tip-card">
     <div class="tip-title">☕ Support BIRDEYE</div>
     <div class="tip-sub">This tool is free forever. If it helped you, tip the builder!</div>
@@ -587,16 +389,13 @@
       </div>
       <div class="tip-option">
         <div class="tip-option-title">🎮 Tip In-Game Items</div>
-        <div style="color:rgba(255,255,255,0.7);font-size:0.85rem;margin-bottom:12px;line-height:1.6">
-          Find me in-game and send gold or items directly to my character!
-        </div>
+        <div style="color:rgba(255,255,255,0.7);font-size:0.85rem;margin-bottom:12px;line-height:1.6">Find me in-game and send gold or items directly to my character!</div>
         <div class="tip-wallet">In-game username: <strong style="color:#F5C842">sirlym</strong></div>
         <button class="copy-btn" onclick="copyUsername(this)">📋 Copy Username</button>
       </div>
     </div>
   </div>
 
-  <!-- FOLLOW BANNER -->
   <div class="follow-banner">
     <div class="follow-text">
       <strong>🐘 Stay updated on BIRDEYE & Kintara!</strong>
@@ -616,7 +415,6 @@
 </footer>
 
 <script>
-// All API calls go through our Vercel proxy
 const PROXY = '/api/proxy?url=';
 const API_GAME = 'https://ktra-server-b.onrender.com/api';
 const API_MAIN = 'https://kintara.gg/api';
@@ -633,26 +431,24 @@ async function apiFetch(url) {
 }
 
 // ─── MERCHANT ───
+// FIX: using correct field names from API response:
+// wood, stone, coal, cooked_fish_meat (not cookedFish)
+// goals.wood, goals.stone, goals.coal, goals.cooked_fish_meat for max values
 async function loadMerchant() {
   const data = await apiFetch(`${API_GAME}/world/merchant-campaign`);
-  if (!data) { useMerchantFallback(); return; }
+  if (!data) return;
 
   const resources = [
-    { keys: ['wood','woodCurrent'], maxKeys: ['woodMax','wood_max'], barId:'wood-bar', cntId:'wood-count', pctId:'wood-pct', defaultMax:500000 },
-    { keys: ['stone','stoneCurrent'], maxKeys: ['stoneMax','stone_max'], barId:'stone-bar', cntId:'stone-count', pctId:'stone-pct', defaultMax:300000 },
-    { keys: ['coal','coalCurrent'], maxKeys: ['coalMax','coal_max'], barId:'coal-bar', cntId:'coal-count', pctId:'coal-pct', defaultMax:200000 },
-    { keys: ['cookedFish','fish','fishCurrent'], maxKeys: ['fishMax','cookedFishMax','fish_max'], barId:'fish-bar', cntId:'fish-count', pctId:'fish-pct', defaultMax:10000 },
+    { current: data.wood, max: data.goals?.wood ?? 500000, barId:'wood-bar', cntId:'wood-count', pctId:'wood-pct' },
+    { current: data.stone, max: data.goals?.stone ?? 300000, barId:'stone-bar', cntId:'stone-count', pctId:'stone-pct' },
+    { current: data.coal, max: data.goals?.coal ?? 200000, barId:'coal-bar', cntId:'coal-count', pctId:'coal-pct' },
+    { current: data.cooked_fish_meat, max: data.goals?.cooked_fish_meat ?? 10000, barId:'fish-bar', cntId:'fish-count', pctId:'fish-pct' },
   ];
 
   let totalPct = 0;
   resources.forEach(r => {
-    let current = 0, max = r.defaultMax;
-    for (const k of r.keys) { if (data[k] !== undefined) { current = data[k]; break; } }
-    for (const k of r.maxKeys) { if (data[k] !== undefined) { max = data[k]; break; } }
-    if (data[r.keys[0]] && typeof data[r.keys[0]] === 'object') {
-      current = data[r.keys[0]].current ?? current;
-      max = data[r.keys[0]].max ?? max;
-    }
+    const current = r.current ?? 0;
+    const max = r.max ?? 1;
     const pct = Math.min(100, Math.round((current / max) * 100));
     totalPct += pct;
     const bar = document.getElementById(r.barId);
@@ -663,42 +459,24 @@ async function loadMerchant() {
     if (pctEl) pctEl.textContent = pct + '%';
   });
 
-  updateETA(totalPct / resources.length);
+  updateETA(totalPct / resources.length, data);
 }
 
-function useMerchantFallback() {
-  const items = [
-    { barId:'wood-bar', cntId:'wood-count', pctId:'wood-pct', cur:71675, max:500000 },
-    { barId:'stone-bar', cntId:'stone-count', pctId:'stone-pct', cur:19315, max:300000 },
-    { barId:'coal-bar', cntId:'coal-count', pctId:'coal-pct', cur:13631, max:200000 },
-    { barId:'fish-bar', cntId:'fish-count', pctId:'fish-pct', cur:10000, max:10000 },
-  ];
-  let totalPct = 0;
-  items.forEach(i => {
-    const pct = Math.min(100, Math.round((i.cur / i.max) * 100));
-    totalPct += pct;
-    const bar = document.getElementById(i.barId);
-    if (bar) setTimeout(() => bar.style.width = pct + '%', 200);
-    const cnt = document.getElementById(i.cntId);
-    if (cnt) cnt.textContent = `${i.cur.toLocaleString()} / ${i.max.toLocaleString()} (cached)`;
-    const pctEl = document.getElementById(i.pctId);
-    if (pctEl) pctEl.textContent = pct + '%';
-  });
-  updateETA(totalPct / items.length);
-}
-
-function updateETA(avgPct) {
+function updateETA(avgPct, data) {
   const etaEl = document.getElementById('eta-value');
   const noteEl = document.getElementById('eta-note');
   const statusEl = document.getElementById('merchant-status');
-  const remaining = 100 - avgPct;
 
-  if (avgPct >= 100) {
+  // Use goldTradeEnabled and complete from API if available
+  const isComplete = data?.complete === true || data?.goldTradeEnabled === true || avgPct >= 100;
+
+  if (isComplete) {
     etaEl.textContent = 'Merchant returning soon! 🎉';
     noteEl.textContent = 'All resources collected — gold incoming!';
     statusEl.className = 'merchant-status status-active';
     statusEl.textContent = '✅ Returning with Gold!';
   } else {
+    const remaining = 100 - avgPct;
     const donateRatePerHour = 5;
     const hoursLeft = Math.ceil(remaining / donateRatePerHour);
     const days = Math.floor(hoursLeft / 24);
@@ -706,6 +484,8 @@ function updateETA(avgPct) {
     const etaStr = days > 0 ? `~${days}d ${hrs}h` : `~${hrs} hour${hrs !== 1 ? 's' : ''}`;
     etaEl.textContent = etaStr;
     noteEl.textContent = `${Math.round(avgPct)}% avg filled · Donate resources in-game to speed this up!`;
+    statusEl.className = 'merchant-status status-empty';
+    statusEl.textContent = '⏳ Out of Gold';
   }
 }
 
@@ -714,73 +494,71 @@ async function loadBlimpStats() {
   const data = await apiFetch(`${API_GAME}/token/blimp-stats`);
   const grid = document.getElementById('blimp-grid');
   if (!data) {
-    grid.innerHTML = `<div class="blimp-card"><div class="b-val">—</div><div class="b-label">Gold Price (KINS)</div></div>
-    <div class="blimp-card"><div class="b-val">—</div><div class="b-label">Total Burns 🔥</div></div>
-    <div class="blimp-card"><div class="b-val">—</div><div class="b-label">24h Volume</div></div>
-    <div class="blimp-card"><div class="b-val">—</div><div class="b-label">Market Cap</div></div>`;
+    grid.innerHTML = `
+      <div class="blimp-card"><div class="b-val">—</div><div class="b-label">Gold Price (KINS)</div></div>
+      <div class="blimp-card"><div class="b-val">—</div><div class="b-label">Total Burns 🔥</div></div>
+      <div class="blimp-card"><div class="b-val">—</div><div class="b-label">24h Volume</div></div>
+      <div class="blimp-card"><div class="b-val">—</div><div class="b-label">Market Cap</div></div>`;
     return;
   }
-
-  const fmt = (v, prefix='') => v !== undefined ? prefix + Number(v).toLocaleString() : '—';
-  const fmtDec = (v, d=6) => v !== undefined ? Number(v).toFixed(d) : '—';
-
+  const fmt = (v, prefix='') => v !== undefined && v !== null ? prefix + Number(v).toLocaleString() : '—';
+  const fmtDec = (v, d=6) => v !== undefined && v !== null ? Number(v).toFixed(d) : '—';
   grid.innerHTML = `
     <div class="blimp-card"><div class="b-val">${fmtDec(data.goldPrice ?? data.gold_price)}</div><div class="b-label">Gold Price (KINS)</div></div>
     <div class="blimp-card"><div class="b-val">${fmt(data.totalBurned ?? data.burns)}</div><div class="b-label">Total Burns 🔥</div></div>
     <div class="blimp-card"><div class="b-val">${fmt(data.volume24h ?? data.volume, '$')}</div><div class="b-label">24h Volume</div></div>
-    <div class="blimp-card"><div class="b-val">${fmt(data.marketCap ?? data.market_cap, '$')}</div><div class="b-label">Market Cap</div></div>
-  `;
+    <div class="blimp-card"><div class="b-val">${fmt(data.marketCap ?? data.market_cap, '$')}</div><div class="b-label">Market Cap</div></div>`;
 }
 
 // ─── MARKETPLACE ───
+// FIX: correct URL and field names from API response:
+// URL: /marketplace/listings?sort=latest&currency=all&category=cat_gold&limit=20&offset=0
+// fields: sellerName, itemType, priceGold, currency, createdAt
 async function loadMarketplace() {
-  const [goldData, allData] = await Promise.all([
-    apiFetch(`${API_GAME}/world-item-index?category=gold&sort=desc`),
-    apiFetch(`${API_GAME}/world-marketplace-index?sort=desc`)
-  ]);
+  const data = await apiFetch(`${API_MAIN}/marketplace/listings?sort=latest&currency=all&category=cat_gold&limit=20&offset=0`);
+  const listings = data?.listings ?? (Array.isArray(data) ? data : []);
 
-  const toArr = d => Array.isArray(d) ? d : (d?.items ?? d?.listings ?? d?.data ?? []);
-  const combined = [...toArr(goldData), ...toArr(allData)].slice(0, 15);
-
-  const goldTrades = combined.filter(i => (i.category||i.type||'').toLowerCase().includes('gold')).length;
-  const mountTrades = combined.filter(i => (i.category||i.type||i.name||'').toLowerCase().includes('mount')).length;
-
-  document.getElementById('gold-trades').textContent = goldTrades || combined.length || '—';
+  // Count by currency type
+  const goldTrades = listings.filter(i => i.currency === 'gold').length;
+  const mountTrades = listings.filter(i => (i.itemType||'').toLowerCase().includes('mount')).length;
+  document.getElementById('gold-trades').textContent = goldTrades || listings.length || '—';
   document.getElementById('mount-trades').textContent = mountTrades || '—';
 
   const tbody = document.getElementById('marketplace-tbody');
-  if (!combined.length) {
+  if (!listings.length) {
     tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:24px;color:#aaa">No marketplace data available</td></tr>`;
   } else {
-    tbody.innerHTML = combined.map(item => {
-      const name = item.name ?? item.itemName ?? item.item ?? 'Unknown';
-      const cat = item.category ?? item.type ?? 'item';
-      const price = item.price ?? item.goldPrice ?? item.amount ?? '—';
-      const seller = item.seller ?? item.sellerName ?? item.username ?? '???';
-      const time = item.listedAt ?? item.createdAt ?? item.time ?? '';
-      const timeStr = time ? new Date(time).toLocaleTimeString() : 'Just now';
-      const isMount = (cat+name).toLowerCase().includes('mount');
+    tbody.innerHTML = listings.slice(0, 15).map(item => {
+      const name = item.itemType ?? item.name ?? 'Unknown';
+      const currency = item.currency ?? 'gold';
+      const price = item.priceGold ?? item.price ?? '—';
+      const seller = item.sellerName ?? item.seller ?? '???';
+      const time = item.createdAt ? new Date(item.createdAt).toLocaleTimeString() : 'Just now';
+      const isMount = name.toLowerCase().includes('mount');
+      const isToken = currency === 'token';
+      const tagClass = isMount ? 'tag-mount' : isToken ? 'tag-token' : 'tag-gold';
+      const tagLabel = isMount ? '🐴 Mount' : isToken ? '🔵 Token' : '🪙 Gold';
       return `<tr>
         <td>${name}</td>
-        <td><span class="tag ${isMount ? 'tag-mount' : 'tag-gold'}">${isMount ? '🐴 Mount' : '🪙 Gold'}</span></td>
+        <td><span class="tag ${tagClass}">${tagLabel}</span></td>
         <td><strong>${typeof price === 'number' ? price.toLocaleString() : price}</strong> gold</td>
         <td>${seller}</td>
-        <td>${timeStr}</td>
+        <td>${time}</td>
       </tr>`;
     }).join('');
   }
 
-  estimateBots(combined);
-  buildWhales(combined);
-  buildP2P(combined);
+  estimateBots(listings);
+  buildWhales(listings);
+  buildP2P(listings);
 }
 
 // ─── WHALES ───
 function buildWhales(items) {
   const map = {};
   items.forEach(i => {
-    const seller = i.seller ?? i.sellerName ?? i.username ?? 'Unknown';
-    const price = typeof (i.price ?? i.goldPrice ?? i.amount) === 'number' ? (i.price ?? i.goldPrice ?? i.amount) : 0;
+    const seller = i.sellerName ?? i.seller ?? 'Unknown';
+    const price = typeof i.priceGold === 'number' ? i.priceGold : 0;
     map[seller] = (map[seller] || 0) + price;
   });
   const sorted = Object.entries(map).sort((a,b)=>b[1]-a[1]).slice(0,8);
@@ -799,7 +577,7 @@ function buildWhales(items) {
 // ─── BOTS ───
 function estimateBots(items) {
   const counts = {};
-  items.forEach(i => { const s = i.seller??i.sellerName??'?'; counts[s]=(counts[s]||0)+1; });
+  items.forEach(i => { const s = i.sellerName ?? i.seller ?? '?'; counts[s]=(counts[s]||0)+1; });
   const total = Object.keys(counts).length || 1;
   const highFreq = Object.values(counts).filter(c=>c>=3).length;
   const pct = Math.round((highFreq/total)*100);
@@ -812,20 +590,8 @@ function estimateBots(items) {
 
 // ─── P2P ───
 function buildP2P(items) {
-  const p2p = items.filter(i=>i.buyer&&i.seller).slice(0,8);
   const el = document.getElementById('p2p-list');
-  if (!p2p.length) {
-    el.innerHTML = `<div class="p2p-row" style="justify-content:center;color:#aaa">P2P exchange data requires player auth — not publicly available</div>`;
-    return;
-  }
-  el.innerHTML = p2p.map(i=>`
-    <div class="p2p-row">
-      <div class="p2p-from">📤 ${i.seller}</div>
-      <div class="p2p-arrow">→</div>
-      <div class="p2p-to">📥 ${i.buyer}</div>
-      <div class="p2p-item">${i.name??'Item'}</div>
-      <div class="p2p-time">${i.price??'?'} gold</div>
-    </div>`).join('');
+  el.innerHTML = `<div class="p2p-row" style="justify-content:center;color:#aaa">P2P exchange data requires player auth — tracking via marketplace activity</div>`;
 }
 
 // ─── PLAYER LOOKUP ───
@@ -837,9 +603,9 @@ async function lookupPlayer() {
   resultEl.classList.add('show');
   contentEl.innerHTML = `<div style="text-align:center;padding:16px"><div class="loading"></div> Looking up <strong>${username}</strong>...</div>`;
 
-  const data = await apiFetch(`${API_GAME}/world-marketplace-index?sort=desc&seller=${encodeURIComponent(username)}`);
-  const items = Array.isArray(data) ? data : (data?.items ?? data?.listings ?? []);
-  const playerItems = items.filter(i => (i.seller??i.sellerName??i.username??'').toLowerCase()===username.toLowerCase());
+  const data = await apiFetch(`${API_MAIN}/marketplace/listings?sort=latest&currency=all&limit=50&offset=0`);
+  const listings = data?.listings ?? (Array.isArray(data) ? data : []);
+  const playerItems = listings.filter(i => (i.sellerName ?? i.seller ?? '').toLowerCase() === username.toLowerCase());
 
   if (!playerItems.length) {
     contentEl.innerHTML = `<div style="text-align:center;color:#aaa;padding:16px">No recent trades found for <strong>${username}</strong>.</div>`;
@@ -849,10 +615,10 @@ async function lookupPlayer() {
     <div style="font-weight:800;margin-bottom:12px">🎮 Recent trades by <span style="color:var(--sky)">${username}</span></div>
     ${playerItems.slice(0,6).map(i=>`
       <div class="p2p-row">
-        <div class="p2p-item">${i.name??'Item'}</div>
+        <div class="p2p-item">${i.itemType ?? i.name ?? 'Item'}</div>
         <div style="flex:1"></div>
-        <div style="font-weight:800">${i.price??'?'} gold</div>
-        <div class="p2p-time">${i.listedAt?new Date(i.listedAt).toLocaleDateString():'Recent'}</div>
+        <div style="font-weight:800">${i.priceGold ?? '?'} gold</div>
+        <div style="color:#bbb;font-size:0.72rem">${i.createdAt ? new Date(i.createdAt).toLocaleDateString() : 'Recent'}</div>
       </div>`).join('')}`;
 }
 
@@ -860,9 +626,7 @@ async function lookupPlayer() {
 async function loadStatus() {
   const data = await apiFetch(`${API_GAME}/property-signs/status`);
   const online = data?.onlinePlayers ?? data?.online ?? data?.count ?? data?.players ?? '—';
-  const avgHrs = data?.avgSessionHours ?? data?.avgSession ?? '~2';
   document.getElementById('active-players').textContent = typeof online === 'number' ? online.toLocaleString() : online;
-  document.getElementById('avg-session').textContent = typeof avgHrs === 'number' ? avgHrs.toFixed(1) : avgHrs;
 }
 
 // ─── COPY ───
