@@ -53,6 +53,14 @@ async function sendTelegramMessage(text) {
   });
 }
 
+// Milestone tiers, defined in ascending order with their own state key and message
+const TIERS = [
+  { pct: 50, key: 'sent50', label: '50%', emoji: '📢', title: 'Merchant Halfway There!', body: (p) => `Donations are at ${p}% filled — keep contributing wood, stone, coal, metal & fish!` },
+  { pct: 75, key: 'sent75', label: '75%', emoji: '⚡', title: 'Merchant Three-Quarters Full!', body: (p) => `Donations are at ${p}% — getting close, keep the momentum going!` },
+  { pct: 90, key: 'sent90', label: '90%', emoji: '🚨', title: 'Merchant Almost Ready!', body: (p) => `Donations are at ${p}% — final push needed before he heads out for gold!` },
+  { pct: 96, key: 'sent96', label: '96%', emoji: '🔥', title: 'Merchant On The Verge!', body: (p) => `Donations are at ${p}% — practically there, last few contributions will seal it!` },
+];
+
 export default async function handler(req) {
   const corsHeaders = { 'Access-Control-Allow-Origin': '*' };
   try {
@@ -66,8 +74,11 @@ export default async function handler(req) {
 
     let state = await redis.get('merchant-alert-state');
     if (!state || typeof state !== 'object') {
-      state = { sent50: false, sent90: false, sentReturned: false };
+      state = {};
     }
+    // Ensure all tier keys exist on state (covers first run after this update)
+    TIERS.forEach(t => { if (typeof state[t.key] !== 'boolean') state[t.key] = false; });
+    if (typeof state.sentReturned !== 'boolean') state.sentReturned = false;
 
     let messageSent = null;
 
@@ -76,32 +87,36 @@ export default async function handler(req) {
         `🎉 <b>The Merchant Has Returned!</b>\n\nGold is back in stock — head to the marketplace now!\n\n🐘 Tracked live by KINTARA BIRDEYE`
       );
       state.sentReturned = true;
-      state.sent50 = false;
-      state.sent90 = false;
+      TIERS.forEach(t => { state[t.key] = false; });
       messageSent = 'returned';
     } else if (!isComplete) {
+      // Reset the "returned" flag once a fresh collection cycle clearly starts
       if (state.sentReturned && avgPct < 10) {
         state.sentReturned = false;
       }
-      if (avgPct >= 90 && !state.sent90) {
-        await sendTelegramMessage(
-          `🚨 <b>Merchant Almost Ready!</b>\n\nDonations are at ${Math.round(avgPct)}% — final push needed before he heads out for gold!\n\n🐘 Tracked live by KINTARA BIRDEYE`
-        );
-        state.sent90 = true;
-        messageSent = '90%';
-      } else if (avgPct >= 50 && !state.sent50) {
-        await sendTelegramMessage(
-          `📢 <b>Merchant Halfway There!</b>\n\nDonations are at ${Math.round(avgPct)}% filled — keep contributing wood, stone, coal, metal & fish!\n\n🐘 Tracked live by KINTARA BIRDEYE`
-        );
-        state.sent50 = true;
-        messageSent = '50%';
+
+      // Walk tiers from highest to lowest so only the highest crossed tier fires per check
+      for (let i = TIERS.length - 1; i >= 0; i--) {
+        const tier = TIERS[i];
+        if (avgPct >= tier.pct && !state[tier.key]) {
+          await sendTelegramMessage(
+            `${tier.emoji} <b>${tier.title}</b>\n\n${tier.body(Math.round(avgPct))}\n\n🐘 Tracked live by KINTARA BIRDEYE`
+          );
+          state[tier.key] = true;
+          messageSent = tier.label;
+          break;
+        }
       }
-      if (avgPct < 50) { state.sent50 = false; state.sent90 = false; }
+
+      // Reset all tiers if donations dropped back below the lowest tier (new cycle)
+      if (avgPct < TIERS[0].pct) {
+        TIERS.forEach(t => { state[t.key] = false; });
+      }
     }
 
     await redis.set('merchant-alert-state', state);
 
-    return new Response(JSON.stringify({ ok: true, avgPct, isComplete, messageSent, state, rawData: data }), { status: 200, headers: corsHeaders });
+    return new Response(JSON.stringify({ ok: true, avgPct, isComplete, messageSent, state }), { status: 200, headers: corsHeaders });
   } catch (err) {
     return new Response(JSON.stringify({ ok: false, error: err.message }), { status: 500, headers: corsHeaders });
   }
