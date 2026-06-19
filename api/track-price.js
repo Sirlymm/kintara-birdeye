@@ -17,9 +17,16 @@ async function fetchGoldPrice() {
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36',
     }
   });
-  const data = await response.json();
-  const listings = data?.listings ?? [];
 
+  const text = await response.text();
+  let data;
+  try {
+    data = JSON.parse(text);
+  } catch (e) {
+    return null;
+  }
+
+  const listings = data?.listings ?? [];
   const validListings = listings.filter(l => l.priceUsd && l.priceGold);
   if (!validListings.length) return null;
 
@@ -33,7 +40,7 @@ export default async function handler(req) {
   try {
     const price = await fetchGoldPrice();
     if (price === null) {
-      return new Response(JSON.stringify({ ok: false, error: 'No valid listings found' }), { status: 200, headers: corsHeaders });
+      return new Response(JSON.stringify({ ok: false, error: 'No valid listings found or invalid response' }), { status: 200, headers: corsHeaders });
     }
 
     const snapshot = { price, timestamp: Date.now() };
