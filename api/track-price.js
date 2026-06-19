@@ -8,7 +8,7 @@ const redis = new Redis({
 });
 
 async function fetchGoldPrice() {
-  const url = 'https://kintara.gg/api/marketplace/listings?sort=latest&currency=all&category=cat_gold&limit=50&offset=0';
+  const url = 'https://kintara.gg/api/marketplace/listings?sort=latest&currency=all&category=all&limit=50&offset=0';
   const response = await fetch(url, {
     headers: {
       'Origin': 'https://kintara.gg',
@@ -27,12 +27,23 @@ async function fetchGoldPrice() {
   }
 
   const listings = data?.listings ?? [];
-  const validListings = listings.filter(l => l.priceUsd && l.priceGold);
-  if (!validListings.length) return null;
 
-  const rates = validListings.map(l => l.priceUsd / l.priceGold);
-  const avgRate = rates.reduce((a, b) => a + b, 0) / rates.length;
-  return avgRate;
+  const goldListings = listings.filter(l =>
+    l.itemType === 'gold' &&
+    l.currency === 'token' &&
+    typeof l.priceUsd === 'number' &&
+    l.priceUsd > 0
+  );
+
+  if (!goldListings.length) return null;
+
+  const cheapest = goldListings.reduce((min, l) => {
+    const unitPrice = l.priceUsd / (l.quantity || 1);
+    const minUnitPrice = min.priceUsd / (min.quantity || 1);
+    return unitPrice < minUnitPrice ? l : min;
+  });
+
+  return cheapest.priceUsd / (cheapest.quantity || 1);
 }
 
 export default async function handler(req) {
@@ -40,7 +51,7 @@ export default async function handler(req) {
   try {
     const price = await fetchGoldPrice();
     if (price === null) {
-      return new Response(JSON.stringify({ ok: false, error: 'No valid listings found or invalid response' }), { status: 200, headers: corsHeaders });
+      return new Response(JSON.stringify({ ok: false, error: 'No valid gold listings found' }), { status: 200, headers: corsHeaders });
     }
 
     const snapshot = { price, timestamp: Date.now() };
