@@ -1,1 +1,8 @@
-{}
+{
+  "crons": [
+    {
+      "path": "/api/track-price",
+      "schedule": "*/30 * * * *"
+    }
+  ]
+}
