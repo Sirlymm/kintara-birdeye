@@ -1,6 +1,11 @@
-import { kv } from '@vercel/kv';
+import { Redis } from '@upstash/redis';
 
 export const config = { runtime: 'edge' };
+
+const redis = new Redis({
+  url: process.env.KV_REST_API_URL,
+  token: process.env.KV_REST_API_TOKEN,
+});
 
 async function getMerchantData() {
   const url = 'https://ktra-server-b.onrender.com/api/world/merchant-campaign';
@@ -49,7 +54,10 @@ export default async function handler(req) {
     const avgPct = calcAvgPct(data);
     const isComplete = data?.complete === true || data?.goldTradeEnabled === true;
 
-    const state = await kv.get('merchant-alert-state') || { sent50: false, sent90: false, sentReturned: false };
+    let state = await redis.get('merchant-alert-state');
+    if (!state || typeof state !== 'object') {
+      state = { sent50: false, sent90: false, sentReturned: false };
+    }
 
     let messageSent = null;
 
@@ -81,7 +89,7 @@ export default async function handler(req) {
       if (avgPct < 50) { state.sent50 = false; state.sent90 = false; }
     }
 
-    await kv.set('merchant-alert-state', state);
+    await redis.set('merchant-alert-state', state);
 
     return new Response(JSON.stringify({ ok: true, avgPct, isComplete, messageSent, state }), { status: 200, headers: corsHeaders });
   } catch (err) {
