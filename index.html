@@ -118,6 +118,27 @@
   .exchange-title { font-family: 'Fredoka One', cursive; font-size: 1.2rem; margin-bottom: 8px; }
   .exchange-note { color: #999; font-size: 0.85rem; max-width: 480px; margin: 0 auto; line-height: 1.5; }
 
+  /* CALCULATOR */
+  .calc-card { background: var(--card); border: 3px solid var(--green); border-radius: var(--radius); padding: 24px; margin-bottom: 28px; box-shadow: var(--shadow); }
+  .calc-intro { margin-bottom: 22px; }
+  .calc-intro-title { font-family: 'Fredoka One', cursive; font-size: 1.2rem; margin-bottom: 12px; color: var(--navy); }
+  .calc-base-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+  .calc-base-item { background: #f5fff6; border: 2px solid #d8f0da; border-radius: 14px; padding: 14px 10px; text-align: center; display: flex; flex-direction: column; gap: 4px; }
+  .calc-base-icon { font-size: 1.5rem; }
+  .calc-base-val { font-family: 'Fredoka One', cursive; font-size: 1.2rem; color: var(--navy); }
+  .calc-base-label { font-size: 0.72rem; color: #888; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .calc-input-row { margin-bottom: 18px; padding-top: 14px; border-top: 2px dashed #eee; }
+  .calc-input-label { display: block; font-weight: 800; font-size: 0.9rem; margin-bottom: 8px; color: var(--navy); }
+  .calc-input-wrap { position: relative; display: flex; align-items: center; }
+  .calc-input { width: 100%; padding: 14px 70px 14px 18px; border: 2px solid var(--green); border-radius: 50px; font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--navy); outline: none; }
+  .calc-input-suffix { position: absolute; right: 20px; font-weight: 700; color: #999; font-size: 0.9rem; }
+  .calc-results { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 14px; }
+  .calc-result-row { background: linear-gradient(135deg, #f0fff2, #fff); border: 2px solid var(--green); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+  .calc-result-icon { font-size: 1.6rem; }
+  .calc-result-label { font-size: 0.72rem; color: #888; font-weight: 700; text-transform: uppercase; }
+  .calc-result-val { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: #27ae60; }
+  .calc-note { font-size: 0.75rem; color: #aaa; text-align: center; line-height: 1.5; }
+
   .follow-banner { background: linear-gradient(135deg, #000, #1a1a2e); border-radius: var(--radius); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; border: 2px solid #333; }
   .follow-text { color: #fff; }
   .follow-text strong { font-family: 'Fredoka One', cursive; font-size: 1.2rem; color: var(--gold); display: block; }
@@ -244,23 +265,7 @@
     </div>
   </div>
 
-  <!-- GOLD PRICE -->
-  <div class="section-title">💰 Gold Price Tracker</div>
-  <div class="gold-price-card">
-    <div class="gold-price-header">
-      <div class="gold-price-title">🪙 In-Game Gold Value</div>
-      <div class="gold-price-trend trend-flat" id="price-trend">— tracking starts now</div>
-    </div>
-    <div class="gold-price-now">
-      <div class="gold-price-value" id="gold-price-value">—</div>
-      <div class="gold-price-unit">USD per gold</div>
-    </div>
-    <div class="chart-wrap" id="chart-wrap">
-      <div class="chart-empty">📈 Price history will build up here as we collect data over time — check back soon!</div>
-    </div>
-  </div>
-
-  <!-- NOTIFICATIONS -->
+  <!-- NOTIFICATIONS (moved here, right after merchant tracker) -->
   <div class="section-title">🔔 Get Merchant Alerts</div>
   <div class="notify-card">
     <div class="notify-title">🔔 Never Miss the Merchant!</div>
@@ -279,17 +284,63 @@
 
     <div class="notify-steps">
       <div class="notify-steps-title">How to get notified:</div>
-      <div class="notify-step"><div class="notify-step-num">1</div><div>Send a small tip — minimum <strong>$1</strong> in SOL — to support BIRDEYE</div></div>
+      <div class="notify-step"><div class="notify-step-num">1</div><div>Send a small tip — minimum <strong>$1</strong> in SOL, USDC, or $KINS — to support BIRDEYE</div></div>
       <div class="notify-step"><div class="notify-step-num">2</div><div>Send your <strong>transaction ID</strong> and <strong>Telegram username</strong> to <strong style="color:var(--gold)">@sirlymm</strong> on Telegram</div></div>
       <div class="notify-step"><div class="notify-step-num">3</div><div>You'll be added to receive alerts right in our Telegram group at 50% and 90% merchant fill!</div></div>
     </div>
 
     <div class="notify-wallet">
-      ◎ 4KrAhzjKrHv8rsvDYbXwueWkDemszAhUXbzPMvweWZD5
+      ◎ 4KrAhzjKrHv8rsvDYbXwueWkDemszAhUXbzPMvweWZD5 <span style="opacity:0.6">(Solana network — SOL, USDC, or $KINS)</span>
       <button class="copy-btn-sm" onclick="copyWallet(this)">📋 Copy</button>
     </div>
 
     <a href="https://t.me/sirlymm" target="_blank" class="notify-cta-btn">💬 Message @sirlymm on Telegram</a>
+  </div>
+
+  <!-- GOLD PRICE -->
+  <div class="section-title">💰 Gold Price Tracker</div>
+  <div class="gold-price-card">
+    <div class="gold-price-header">
+      <div class="gold-price-title">🪙 In-Game Gold Value</div>
+      <div class="gold-price-trend trend-flat" id="price-trend">— tracking starts now</div>
+    </div>
+    <div class="gold-price-now">
+      <div class="gold-price-value" id="gold-price-value">—</div>
+      <div class="gold-price-unit">USD per gold</div>
+    </div>
+    <div class="chart-wrap" id="chart-wrap">
+      <div class="chart-empty">📈 Price history will build up here as we collect data over time — check back soon!</div>
+    </div>
+  </div>
+
+  <!-- ITEM CALCULATOR -->
+  <div class="section-title">🧮 Merchant Exchange Calculator</div>
+  <div class="calc-card">
+    <div class="calc-intro">
+      <div class="calc-intro-title">Cost for 1 Gold</div>
+      <div class="calc-base-grid">
+        <div class="calc-base-item"><span class="calc-base-icon">🪵</span><span class="calc-base-val">2,500</span><span class="calc-base-label">Wood</span></div>
+        <div class="calc-base-item"><span class="calc-base-icon">🪨</span><span class="calc-base-val">1,500</span><span class="calc-base-label">Stone</span></div>
+        <div class="calc-base-item"><span class="calc-base-icon">🖤</span><span class="calc-base-val">700</span><span class="calc-base-label">Coal</span></div>
+        <div class="calc-base-item"><span class="calc-base-icon">🐟</span><span class="calc-base-val">30</span><span class="calc-base-label">Cooked Fish</span></div>
+      </div>
+    </div>
+
+    <div class="calc-input-row">
+      <label for="calc-gold-input" class="calc-input-label">How much gold do you want?</label>
+      <div class="calc-input-wrap">
+        <input type="number" id="calc-gold-input" class="calc-input" placeholder="Enter gold amount" min="1" value="1" oninput="calculateResources()"/>
+        <span class="calc-input-suffix">gold</span>
+      </div>
+    </div>
+
+    <div class="calc-results" id="calc-results">
+      <div class="calc-result-row"><span class="calc-result-icon">🪵</span><span class="calc-result-label">Wood needed</span><span class="calc-result-val" id="calc-wood">2,500</span></div>
+      <div class="calc-result-row"><span class="calc-result-icon">🪨</span><span class="calc-result-label">Stone needed</span><span class="calc-result-val" id="calc-stone">1,500</span></div>
+      <div class="calc-result-row"><span class="calc-result-icon">🖤</span><span class="calc-result-label">Coal needed</span><span class="calc-result-val" id="calc-coal">700</span></div>
+      <div class="calc-result-row"><span class="calc-result-icon">🐟</span><span class="calc-result-label">Cooked Fish needed</span><span class="calc-result-val" id="calc-fish">30</span></div>
+    </div>
+    <div class="calc-note">Based on the current exchange rate of 2,500 wood + 1,500 stone + 700 coal + 30 cooked fish per 1 gold. Rate may change with future game updates.</div>
   </div>
 
   <!-- EXCHANGE TRACKER (placeholder) -->
@@ -462,6 +513,20 @@ function drawChart(history) {
       <polyline points="${coords}" fill="none" stroke="#5BAADC" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
     </svg>
   `;
+}
+
+// ─── CALCULATOR ───
+const CALC_RATES = { wood: 2500, stone: 1500, coal: 700, fish: 30 };
+
+function calculateResources() {
+  const input = document.getElementById('calc-gold-input');
+  let goldAmount = parseFloat(input.value);
+  if (isNaN(goldAmount) || goldAmount < 0) goldAmount = 0;
+
+  document.getElementById('calc-wood').textContent = Math.round(CALC_RATES.wood * goldAmount).toLocaleString();
+  document.getElementById('calc-stone').textContent = Math.round(CALC_RATES.stone * goldAmount).toLocaleString();
+  document.getElementById('calc-coal').textContent = Math.round(CALC_RATES.coal * goldAmount).toLocaleString();
+  document.getElementById('calc-fish').textContent = Math.round(CALC_RATES.fish * goldAmount).toLocaleString();
 }
 
 // ─── COPY ───
