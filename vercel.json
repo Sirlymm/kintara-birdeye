@@ -1,7 +1,12 @@
 {
-  "name": "kintara-birdeye",
-  "version": "1.0.0",
-  "dependencies": {
-    "@upstash/redis": "^1.34.0"
-  }
+  "crons": [
+    {
+      "path": "/api/track-price",
+      "schedule": "*/30 * * * *"
+    },
+    {
+      "path": "/api/check-merchant-alerts",
+      "schedule": "*/10 * * * *"
+    }
+  ]
 }
