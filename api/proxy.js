@@ -16,7 +16,7 @@ export default async function handler(req) {
 
   if (!url) return new Response(JSON.stringify({ error: 'Missing url' }), { status: 400, headers: corsHeaders });
 
-  const allowed = ['ktra-server-b.onrender.com', 'kintara.gg/api'];
+  const allowed = ['kintara.gg/api'];
   if (!allowed.some(d => url.includes(d))) {
     return new Response(JSON.stringify({ error: 'Not allowed' }), { status: 403, headers: corsHeaders });
   }
