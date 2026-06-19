@@ -8,7 +8,7 @@ const redis = new Redis({
 });
 
 async function getMerchantData() {
-  const url = 'https://ktra-server-b.onrender.com/api/world/merchant-campaign';
+  const url = 'https://kintara.gg/api/world/merchant-campaign';
   const response = await fetch(url, {
     headers: {
       'Origin': 'https://kintara.gg',
@@ -26,73 +26,4 @@ function calcAvgPct(data) {
     { current: data.stone, max: data.goals?.stone ?? 600000 },
     { current: data.coal, max: data.goals?.coal ?? 400000 },
     { current: data.metal, max: data.goals?.metal ?? 50000 },
-    { current: data.cooked_fish_meat, max: data.goals?.cooked_fish_meat ?? 50000 },
-  ];
-  let total = 0;
-  resources.forEach(r => {
-    const pct = Math.min(100, ((r.current ?? 0) / (r.max ?? 1)) * 100);
-    total += pct;
-  });
-  return total / resources.length;
-}
-
-async function sendTelegramMessage(text) {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
-  const url = `https://api.telegram.org/bot${token}/sendMessage`;
-  await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ chat_id: chatId, text, parse_mode: 'HTML' }),
-  });
-}
-
-export default async function handler(req) {
-  const corsHeaders = { 'Access-Control-Allow-Origin': '*' };
-  try {
-    const data = await getMerchantData();
-    const avgPct = calcAvgPct(data);
-    const isComplete = data?.complete === true || data?.goldTradeEnabled === true;
-
-    let state = await redis.get('merchant-alert-state');
-    if (!state || typeof state !== 'object') {
-      state = { sent50: false, sent90: false, sentReturned: false };
-    }
-
-    let messageSent = null;
-
-    if (isComplete && !state.sentReturned) {
-      await sendTelegramMessage(
-        `🎉 <b>The Merchant Has Returned!</b>\n\nGold is back in stock — head to the marketplace now!\n\n🐘 Tracked live by KINTARA BIRDEYE`
-      );
-      state.sentReturned = true;
-      state.sent50 = false;
-      state.sent90 = false;
-      messageSent = 'returned';
-    } else if (!isComplete) {
-      if (state.sentReturned && avgPct < 10) {
-        state.sentReturned = false;
-      }
-      if (avgPct >= 90 && !state.sent90) {
-        await sendTelegramMessage(
-          `🚨 <b>Merchant Almost Ready!</b>\n\nDonations are at ${Math.round(avgPct)}% — final push needed before he heads out for gold!\n\n🐘 Tracked live by KINTARA BIRDEYE`
-        );
-        state.sent90 = true;
-        messageSent = '90%';
-      } else if (avgPct >= 50 && !state.sent50) {
-        await sendTelegramMessage(
-          `📢 <b>Merchant Halfway There!</b>\n\nDonations are at ${Math.round(avgPct)}% filled — keep contributing wood, stone, coal, metal & fish!\n\n🐘 Tracked live by KINTARA BIRDEYE`
-        );
-        state.sent50 = true;
-        messageSent = '50%';
-      }
-      if (avgPct < 50) { state.sent50 = false; state.sent90 = false; }
-    }
-
-    await redis.set('merchant-alert-state', state);
-
-    return new Response(JSON.stringify({ ok: true, avgPct, isComplete, messageSent, state }), { status: 200, headers: corsHeaders });
-  } catch (err) {
-    return new Response(JSON.stringify({ ok: false, error: err.message }), { status: 500, headers: corsHeaders });
-  }
-}
+    {
