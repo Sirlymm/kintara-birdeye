@@ -3,6 +3,10 @@
     {
       "path": "/api/track-price",
       "schedule": "*/30 * * * *"
+    },
+    {
+      "path": "/api/check-merchant-alerts",
+      "schedule": "*/10 * * * *"
     }
   ]
 }
