@@ -1,6 +1,11 @@
-import { kv } from '@vercel/kv';
+import { Redis } from '@upstash/redis';
 
 export const config = { runtime: 'edge' };
+
+const redis = new Redis({
+  url: process.env.KV_REST_API_URL,
+  token: process.env.KV_REST_API_TOKEN,
+});
 
 async function fetchGoldPrice() {
   const url = 'https://kintara.gg/api/marketplace/listings?sort=latest&currency=all&category=cat_gold&limit=50&offset=0';
@@ -34,10 +39,11 @@ export default async function handler(req) {
     const snapshot = { price, timestamp: Date.now() };
     const key = 'gold-price-history';
 
-    let history = await kv.get(key) || [];
+    let history = await redis.get(key) || [];
+    if (!Array.isArray(history)) history = [];
     history.push(snapshot);
     if (history.length > 500) history = history.slice(-500);
-    await kv.set(key, history);
+    await redis.set(key, history);
 
     return new Response(JSON.stringify({ ok: true, snapshot, totalPoints: history.length }), { status: 200, headers: corsHeaders });
   } catch (err) {
