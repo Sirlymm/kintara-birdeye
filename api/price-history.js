@@ -10,6 +10,15 @@ const redis = new Redis({
 export default async function handler(req) {
   const corsHeaders = { 'Access-Control-Allow-Origin': '*' };
   try {
+    const reqUrl = new URL(req.url);
+    const type = reqUrl.searchParams.get('type') || 'gold';
+
+    if (type === 'materials') {
+      let history = await redis.get('materials-price-history') || [];
+      if (!Array.isArray(history)) history = [];
+      return new Response(JSON.stringify({ ok: true, history }), { status: 200, headers: corsHeaders });
+    }
+
     let history = await redis.get('gold-price-history') || [];
     if (!Array.isArray(history)) history = [];
     return new Response(JSON.stringify({ ok: true, history }), { status: 200, headers: corsHeaders });
