@@ -95,17 +95,22 @@ export default async function handler(req) {
         state.sentReturned = false;
       }
 
-      // Walk tiers from highest to lowest so only the highest crossed tier fires per check
-      for (let i = TIERS.length - 1; i >= 0; i--) {
+      // Walk tiers from lowest to highest and fire EVERY crossed-but-unsent tier,
+      // so a jump that skips past multiple thresholds in one check (e.g. 68% -> 92%)
+      // still sends the 75% alert instead of silently skipping it.
+      const sentThisRun = [];
+      for (let i = 0; i < TIERS.length; i++) {
         const tier = TIERS[i];
         if (avgPct >= tier.pct && !state[tier.key]) {
           await sendTelegramMessage(
             `${tier.emoji} <b>${tier.title}</b>\n\n${tier.body(Math.round(avgPct))}\n\n🐘 Tracked live by KINTARA BIRDEYE`
           );
           state[tier.key] = true;
-          messageSent = tier.label;
-          break;
+          sentThisRun.push(tier.label);
         }
+      }
+      if (sentThisRun.length > 0) {
+        messageSent = sentThisRun.join(', ');
       }
 
       // Reset all tiers if donations dropped back below the lowest tier (new cycle)
