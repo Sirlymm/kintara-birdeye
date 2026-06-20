@@ -7,7 +7,18 @@ const redis = new Redis({
   token: process.env.KV_REST_API_TOKEN,
 });
 
-async function fetchGoldPrice() {
+// itemType values as seen on the live marketplace API.
+// 'fish' includes a fallback alias in case Kintara's API string for
+// cooked fish meat differs slightly from the merchant-campaign field name.
+const MATERIAL_ITEM_TYPES = {
+  wood: ['wood'],
+  stone: ['stone'],
+  coal: ['coal'],
+  metal: ['metal'],
+  fish: ['cooked_fish_meat', 'cooked_fish'],
+};
+
+async function fetchListings() {
   const url = 'https://kintara.gg/api/marketplace/listings?sort=latest&currency=all&category=all&limit=50&offset=0';
   const response = await fetch(url, {
     headers: {
@@ -17,53 +28,75 @@ async function fetchGoldPrice() {
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36',
     }
   });
-
   const text = await response.text();
-  let data;
   try {
-    data = JSON.parse(text);
+    const data = JSON.parse(text);
+    return data?.listings ?? [];
   } catch (e) {
-    return null;
+    return [];
   }
+}
 
-  const listings = data?.listings ?? [];
-
-  const goldListings = listings.filter(l =>
-    l.itemType === 'gold' &&
+function cheapestUnitPrice(listings, itemTypes) {
+  const matches = listings.filter(l =>
+    itemTypes.includes(l.itemType) &&
     l.currency === 'token' &&
     typeof l.priceUsd === 'number' &&
     l.priceUsd > 0
   );
-
-  if (!goldListings.length) return null;
-
-  const cheapest = goldListings.reduce((min, l) => {
+  if (!matches.length) return null;
+  const cheapest = matches.reduce((min, l) => {
     const unitPrice = l.priceUsd / (l.quantity || 1);
     const minUnitPrice = min.priceUsd / (min.quantity || 1);
     return unitPrice < minUnitPrice ? l : min;
   });
-
   return cheapest.priceUsd / (cheapest.quantity || 1);
 }
 
 export default async function handler(req) {
   const corsHeaders = { 'Access-Control-Allow-Origin': '*' };
   try {
-    const price = await fetchGoldPrice();
-    if (price === null) {
-      return new Response(JSON.stringify({ ok: false, error: 'No valid gold listings found' }), { status: 200, headers: corsHeaders });
+    const listings = await fetchListings();
+    if (!listings.length) {
+      return new Response(JSON.stringify({ ok: false, error: 'Could not fetch listings' }), { status: 200, headers: corsHeaders });
     }
 
-    const snapshot = { price, timestamp: Date.now() };
-    const key = 'gold-price-history';
+    // Diagnostic: any item types we don't recognize, useful for confirming
+    // the correct itemType string for cooked fish meat if it ever comes back null.
+    const knownTypes = new Set(['gold', ...Object.values(MATERIAL_ITEM_TYPES).flat()]);
+    const unknownItemTypesSeen = [...new Set(
+      listings.filter(l => !knownTypes.has(l.itemType)).map(l => l.itemType)
+    )];
 
-    let history = await redis.get(key) || [];
-    if (!Array.isArray(history)) history = [];
-    history.push(snapshot);
-    if (history.length > 500) history = history.slice(-500);
-    await redis.set(key, history);
+    // ─── GOLD (unchanged behavior) ───
+    const goldPrice = cheapestUnitPrice(listings, ['gold']);
+    if (goldPrice !== null) {
+      const snapshot = { price: goldPrice, timestamp: Date.now() };
+      let goldHistory = await redis.get('gold-price-history') || [];
+      if (!Array.isArray(goldHistory)) goldHistory = [];
+      goldHistory.push(snapshot);
+      if (goldHistory.length > 500) goldHistory = goldHistory.slice(-500);
+      await redis.set('gold-price-history', goldHistory);
+    }
 
-    return new Response(JSON.stringify({ ok: true, snapshot, totalPoints: history.length }), { status: 200, headers: corsHeaders });
+    // ─── MATERIALS (new) ───
+    const materialPrices = {};
+    for (const [key, itemTypes] of Object.entries(MATERIAL_ITEM_TYPES)) {
+      materialPrices[key] = cheapestUnitPrice(listings, itemTypes);
+    }
+    const materialSnapshot = { ...materialPrices, timestamp: Date.now() };
+    let materialsHistory = await redis.get('materials-price-history') || [];
+    if (!Array.isArray(materialsHistory)) materialsHistory = [];
+    materialsHistory.push(materialSnapshot);
+    if (materialsHistory.length > 500) materialsHistory = materialsHistory.slice(-500);
+    await redis.set('materials-price-history', materialsHistory);
+
+    return new Response(JSON.stringify({
+      ok: true,
+      goldPrice,
+      materialPrices,
+      unknownItemTypesSeen,
+    }), { status: 200, headers: corsHeaders });
   } catch (err) {
     return new Response(JSON.stringify({ ok: false, error: err.message }), { status: 500, headers: corsHeaders });
   }
