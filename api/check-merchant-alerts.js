@@ -76,7 +76,6 @@ export default async function handler(req) {
     if (!state || typeof state !== 'object') {
       state = {};
     }
-    // Ensure all tier keys exist on state (covers first run after this update)
     TIERS.forEach(t => { if (typeof state[t.key] !== 'boolean') state[t.key] = false; });
     if (typeof state.sentReturned !== 'boolean') state.sentReturned = false;
 
@@ -90,39 +89,16 @@ export default async function handler(req) {
       TIERS.forEach(t => { state[t.key] = false; });
       messageSent = 'returned';
     } else if (!isComplete) {
-      // Reset the "returned" flag once a fresh collection cycle clearly starts
+      // Reset the "returned" flag once a fresh collection cycle clearly starts,
+      // and announce that donations are open again.
       if (state.sentReturned && avgPct < 10) {
         state.sentReturned = false;
+        await sendTelegramMessage(
+          `🆕 <b>Donations Are Open Again!</b>\n\nThe Traveling Merchant is collecting resources once more — start donating wood, stone, coal, metal & fish to bring him back with gold!\n\n🐘 Tracked live by KINTARA BIRDEYE`
+        );
+        messageSent = 'reopened';
       }
 
       // Walk tiers from lowest to highest and fire EVERY crossed-but-unsent tier,
       // so a jump that skips past multiple thresholds in one check (e.g. 68% -> 92%)
-      // still sends the 75% alert instead of silently skipping it.
-      const sentThisRun = [];
-      for (let i = 0; i < TIERS.length; i++) {
-        const tier = TIERS[i];
-        if (avgPct >= tier.pct && !state[tier.key]) {
-          await sendTelegramMessage(
-            `${tier.emoji} <b>${tier.title}</b>\n\n${tier.body(Math.round(avgPct))}\n\n🐘 Tracked live by KINTARA BIRDEYE`
-          );
-          state[tier.key] = true;
-          sentThisRun.push(tier.label);
-        }
-      }
-      if (sentThisRun.length > 0) {
-        messageSent = sentThisRun.join(', ');
-      }
-
-      // Reset all tiers if donations dropped back below the lowest tier (new cycle)
-      if (avgPct < TIERS[0].pct) {
-        TIERS.forEach(t => { state[t.key] = false; });
-      }
-    }
-
-    await redis.set('merchant-alert-state', state);
-
-    return new Response(JSON.stringify({ ok: true, avgPct, isComplete, messageSent, state }), { status: 200, headers: corsHeaders });
-  } catch (err) {
-    return new Response(JSON.stringify({ ok: false, error: err.message }), { status: 500, headers: corsHeaders });
-  }
-}
+      // still sends the 75% alert
