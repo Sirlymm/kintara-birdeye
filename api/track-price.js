@@ -19,7 +19,7 @@ const MATERIAL_ITEM_TYPES = {
 };
 
 async function fetchListings() {
-  const url = 'https://kintara.gg/api/marketplace/listings?sort=latest&currency=all&category=all&limit=50&offset=0';
+  const url = 'https://kintara.gg/api/marketplace/listings?sort=latest&currency=all&category=all&limit=200&offset=0';
   const response = await fetch(url, {
     headers: {
       'Origin': 'https://kintara.gg',
