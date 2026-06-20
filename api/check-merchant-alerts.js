@@ -101,4 +101,32 @@ export default async function handler(req) {
 
       // Walk tiers from lowest to highest and fire EVERY crossed-but-unsent tier,
       // so a jump that skips past multiple thresholds in one check (e.g. 68% -> 92%)
-      // still sends the 75% alert
+      // still sends the 75% alert instead of silently skipping it.
+      const sentThisRun = [];
+      for (let i = 0; i < TIERS.length; i++) {
+        const tier = TIERS[i];
+        if (avgPct >= tier.pct && !state[tier.key]) {
+          await sendTelegramMessage(
+            `${tier.emoji} <b>${tier.title}</b>\n\n${tier.body(Math.round(avgPct))}\n\n🐘 Tracked live by KINTARA BIRDEYE`
+          );
+          state[tier.key] = true;
+          sentThisRun.push(tier.label);
+        }
+      }
+      if (sentThisRun.length > 0) {
+        messageSent = messageSent ? `${messageSent}, ${sentThisRun.join(', ')}` : sentThisRun.join(', ');
+      }
+
+      // Reset all tiers if donations dropped back below the lowest tier (new cycle)
+      if (avgPct < TIERS[0].pct) {
+        TIERS.forEach(t => { state[t.key] = false; });
+      }
+    }
+
+    await redis.set('merchant-alert-state', state);
+
+    return new Response(JSON.stringify({ ok: true, avgPct, isComplete, messageSent, state }), { status: 200, headers: corsHeaders });
+  } catch (err) {
+    return new Response(JSON.stringify({ ok: false, error: err.message }), { status: 500, headers: corsHeaders });
+  }
+}
