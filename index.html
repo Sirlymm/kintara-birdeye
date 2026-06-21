@@ -577,8 +577,8 @@ function updateETA(avgPct, data) {
 let latestGoldPrice = null;
 
 async function loadGoldPrice() {
-  await fetch('/api/track-price').catch(()=>{});
-
+  // Snapshots are written ONLY by the Vercel cron now (every 30 min),
+  // never triggered by visitor page loads, to keep Redis usage efficient.
   const res = await fetch('/api/price-history').catch(()=>null);
   const data = res ? await res.json().catch(()=>null) : null;
   const history = data?.history ?? [];
@@ -755,14 +755,25 @@ function copyWallet(btn) {
 }
 
 // ─── INIT ───
-async function init() {
-  await Promise.allSettled([loadMerchant(), loadGoldPrice(), loadMaterialsPrice()]);
+// Merchant data refreshes every 60s (free — talks to kintara.gg directly).
+// Price data refreshes every 2 minutes, since the cron only updates it every 30 min anyway.
+async function loadPriceData() {
+  await Promise.allSettled([loadGoldPrice(), loadMaterialsPrice()]);
   calculateROI();
-  document.getElementById('last-updated').textContent = `Last updated: ${new Date().toLocaleTimeString()} · Auto-refreshes every 60s`;
+}
+
+function stampUpdatedTime() {
+  document.getElementById('last-updated').textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
+}
+
+async function init() {
+  await Promise.allSettled([loadMerchant(), loadPriceData()]);
+  stampUpdatedTime();
 }
 
 init();
-setInterval(init, 60000);
+setInterval(() => { loadMerchant(); stampUpdatedTime(); }, 60000);
+setInterval(loadPriceData, 120000);
 </script>
 </body>
 </html>
