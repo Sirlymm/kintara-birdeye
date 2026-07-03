@@ -10,19 +10,22 @@
     --sky: #5BAADC;
     --gold: #F5C842;
     --green: #7BC67E;
-    --cream: #FFFDF5;
     --navy: #1A2B3C;
-    --card: #ffffff;
+    --card: #16202c;
     --red: #FF6B6B;
     --orange: #FF9F43;
-    --shadow: 0 4px 20px rgba(26,43,60,0.10);
+    --shadow: 0 4px 20px rgba(0,0,0,0.35);
     --radius: 20px;
+    --bg: #0f1620;
+    --text: #e8edf2;
+    --text-muted: #8d9aa8;
+    --border: #2c3b4d;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(--navy); min-height: 100vh; transition: background 0.25s ease, color 0.25s ease; }
+  body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
   .hero {
-    background: linear-gradient(135deg, #5BAADC 0%, #3d8fbf 50%, #1A2B3C 100%);
+    background: linear-gradient(135deg, #1a3a5c 0%, #0f2035 50%, #060e18 100%);
     padding: 32px 20px 40px;
     text-align: center;
     position: relative;
@@ -32,27 +35,25 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   }
   .hero-badge { display: inline-block; background: var(--gold); color: var(--navy); font-family: 'Fredoka One', cursive; font-size: 12px; letter-spacing: 2px; padding: 4px 14px; border-radius: 20px; margin-bottom: 12px; text-transform: uppercase; }
-  .hero h1 { font-family: 'Fredoka One', cursive; font-size: clamp(2.2rem, 6vw, 3.8rem); color: #fff; line-height: 1.1; margin-bottom: 8px; text-shadow: 0 3px 12px rgba(0,0,0,0.25); }
+  .hero h1 { font-family: 'Fredoka One', cursive; font-size: clamp(2.2rem, 6vw, 3.8rem); color: #fff; line-height: 1.1; margin-bottom: 8px; text-shadow: 0 3px 12px rgba(0,0,0,0.4); }
   .hero h1 span { color: var(--gold); }
-  .hero p { color: rgba(255,255,255,0.85); font-size: 1rem; font-weight: 600; margin-bottom: 14px; }
+  .hero p { color: rgba(255,255,255,0.75); font-size: 1rem; font-weight: 600; margin-bottom: 14px; }
   .hero-encourage { color: var(--gold); font-weight: 800; font-size: 0.98rem; max-width: 640px; margin: 0 auto 18px; line-height: 1.5; }
-  .play-now-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--navy); font-family: 'Fredoka One', cursive; font-size: 0.95rem; padding: 10px 22px; border-radius: 50px; text-decoration: none; margin-bottom: 20px; transition: transform 0.15s; box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
+  .play-now-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--navy); font-family: 'Fredoka One', cursive; font-size: 0.95rem; padding: 10px 22px; border-radius: 50px; text-decoration: none; margin-bottom: 20px; transition: transform 0.15s; box-shadow: 0 4px 14px rgba(0,0,0,0.3); }
   .play-now-btn:hover { transform: translateY(-2px) scale(1.02); }
   .hero-badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-  .safe-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(123,198,126,0.25); border: 2px solid var(--green); color: #fff; font-weight: 800; font-size: 0.85rem; padding: 8px 18px; border-radius: 50px; }
-  .twitter-follow-btn { display: inline-flex; align-items: center; gap: 8px; background: #000; border: 2px solid #333; color: #fff; font-weight: 800; font-size: 0.85rem; padding: 8px 18px; border-radius: 50px; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+  .safe-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(123,198,126,0.15); border: 2px solid rgba(123,198,126,0.4); color: #7BC67E; font-weight: 800; font-size: 0.85rem; padding: 8px 18px; border-radius: 50px; }
+  .twitter-follow-btn { display: inline-flex; align-items: center; gap: 8px; background: #111; border: 2px solid #333; color: #fff; font-weight: 800; font-size: 0.85rem; padding: 8px 18px; border-radius: 50px; text-decoration: none; transition: background 0.2s, transform 0.15s; }
   .twitter-follow-btn:hover { background: #222; transform: translateY(-2px); }
   .twitter-follow-btn svg { width: 16px; height: 16px; fill: #fff; }
-  .theme-toggle-btn { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.12); border: 2px solid rgba(255,255,255,0.35); color: #fff; font-weight: 800; font-size: 0.85rem; padding: 8px 18px; border-radius: 50px; cursor: pointer; transition: background 0.2s, transform 0.15s; font-family: 'Nunito', sans-serif; }
-  .theme-toggle-btn:hover { background: rgba(255,255,255,0.22); transform: translateY(-2px); }
 
-  .safe-bar { background: #e8f8e8; border-bottom: 2px solid #b8e6b8; padding: 10px 20px; text-align: center; font-size: 0.85rem; font-weight: 700; color: #2d7a2d; transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
+  .safe-bar { background: #0d2218; border-bottom: 2px solid #1a3d28; padding: 10px 20px; text-align: center; font-size: 0.85rem; font-weight: 700; color: #7bdb8e; }
 
   .container { max-width: 1280px; margin: 0 auto; padding: 32px 16px; }
-  .section-title { font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: var(--navy); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+  .section-title { font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: #f0f4f8; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
   .section-title::after { content: ''; flex: 1; height: 3px; background: linear-gradient(90deg, var(--sky), transparent); border-radius: 2px; }
 
   /* LANDSCAPE PAIRED GRID */
@@ -62,164 +63,134 @@
     .pair-grid { grid-template-columns: 1fr; gap: 0; }
   }
 
-  .merchant-card { background: linear-gradient(135deg, #fff8e1, #fff); border: 3px solid var(--gold); border-radius: var(--radius); padding: 24px; margin-bottom: 28px; box-shadow: var(--shadow); transition: background 0.25s ease, border-color 0.25s ease; }
+  .merchant-card { background: linear-gradient(135deg, #1e1a0e, #141210); border: 2px solid #a8842a; border-radius: var(--radius); padding: 24px; margin-bottom: 28px; box-shadow: var(--shadow); }
   .merchant-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; flex-wrap: wrap; }
   .merchant-avatar { font-size: 3rem; background: var(--gold); border-radius: 50%; width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-  .merchant-title { font-family: 'Fredoka One', cursive; font-size: 1.4rem; color: var(--navy); }
-  .merchant-subtitle { font-size: 0.85rem; color: #888; font-weight: 600; margin-top: 2px; }
+  .merchant-title { font-family: 'Fredoka One', cursive; font-size: 1.4rem; color: #f0f4f8; }
+  .merchant-subtitle { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; margin-top: 2px; }
   .merchant-status { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; margin-left: auto; }
-  .status-empty { background: #ffe5e5; color: var(--red); }
-  .status-active { background: #e5ffe8; color: #27ae60; }
+  .status-empty { background: #2d1515; color: var(--red); border: 1px solid #4d2020; }
+  .status-active { background: #0d2d14; color: #4ade80; border: 1px solid #1a4d28; }
 
   .resource-bar-wrap { margin-bottom: 16px; }
   .resource-bar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-  .resource-name { font-weight: 800; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; }
-  .resource-count { font-size: 0.8rem; color: #888; font-weight: 700; }
-  .resource-pct { font-family: 'Fredoka One', cursive; font-size: 1rem; color: var(--navy); }
-  .bar-track { width: 100%; height: 18px; background: #f0f0f0; border-radius: 20px; overflow: hidden; border: 2px solid #e0e0e0; }
+  .resource-name { font-weight: 800; font-size: 0.9rem; display: flex; align-items: center; gap: 6px; color: #c8d4e0; }
+  .resource-count { font-size: 0.8rem; color: var(--text-muted); font-weight: 700; }
+  .resource-pct { font-family: 'Fredoka One', cursive; font-size: 1rem; color: #f0f4f8; }
+  .bar-track { width: 100%; height: 18px; background: #1a2535; border-radius: 20px; overflow: hidden; border: 1px solid #2c3b4d; }
   .bar-fill { height: 100%; border-radius: 20px; transition: width 1.2s ease; position: relative; overflow: hidden; }
-  .bar-fill::after { content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); animation: shimmer 2s infinite; }
+  .bar-fill::after { content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); animation: shimmer 2s infinite; }
   @keyframes shimmer { to { left: 200%; } }
   .bar-wood { background: linear-gradient(90deg, #8B6914, #C69C2E); }
-  .bar-stone { background: linear-gradient(90deg, #6b6b6b, #aaa); }
-  .bar-coal { background: linear-gradient(90deg, #333, #666); }
-  .bar-fish { background: linear-gradient(90deg, #1a6a9a, #5BAADC); }
-  .bar-metal { background: linear-gradient(90deg, #7c7c9c, #b8b8d8); }
+  .bar-stone { background: linear-gradient(90deg, #5a5a5a, #999); }
+  .bar-coal { background: linear-gradient(90deg, #2a2a2a, #555); }
+  .bar-fish { background: linear-gradient(90deg, #1a5a8a, #4a9acc); }
+  .bar-metal { background: linear-gradient(90deg, #5a5a7c, #9898b8); }
 
-  .merchant-eta { margin-top: 20px; background: var(--navy); border-radius: 14px; padding: 16px 20px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .merchant-eta { margin-top: 20px; background: #0a1520; border: 1px solid var(--border); border-radius: 14px; padding: 16px 20px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
   .eta-icon { font-size: 2rem; }
-  .eta-label { font-size: 0.75rem; color: rgba(255,255,255,0.6); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+  .eta-label { font-size: 0.75rem; color: rgba(255,255,255,0.5); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
   .eta-value { font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: var(--gold); }
-  .eta-note { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 2px; }
+  .eta-note { font-size: 0.75rem; color: rgba(255,255,255,0.4); margin-top: 2px; }
 
   /* GOLD PRICE */
-  .gold-price-card { background: var(--card); border: 3px solid var(--sky); border-radius: var(--radius); padding: 24px; margin-bottom: 28px; box-shadow: var(--shadow); transition: background 0.25s ease, border-color 0.25s ease; }
+  .gold-price-card { background: var(--card); border: 2px solid #1e3a52; border-radius: var(--radius); padding: 24px; margin-bottom: 28px; box-shadow: var(--shadow); }
   .gold-price-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
-  .gold-price-title { font-family: 'Fredoka One', cursive; font-size: 1.4rem; }
+  .gold-price-title { font-family: 'Fredoka One', cursive; font-size: 1.4rem; color: #f0f4f8; }
   .gold-price-now { display: flex; align-items: baseline; gap: 10px; margin-bottom: 16px; }
-  .gold-price-value { font-family: 'Fredoka One', cursive; font-size: 2.4rem; color: var(--navy); }
-  .gold-price-unit { font-size: 0.9rem; color: #888; font-weight: 700; }
+  .gold-price-value { font-family: 'Fredoka One', cursive; font-size: 2.4rem; color: var(--gold); }
+  .gold-price-unit { font-size: 0.9rem; color: var(--text-muted); font-weight: 700; }
   .gold-price-trend { font-size: 0.85rem; font-weight: 800; padding: 4px 10px; border-radius: 20px; }
-  .trend-up { background: #e5ffe8; color: #27ae60; }
-  .trend-down { background: #ffe5e5; color: var(--red); }
-  .trend-flat { background: #f0f0f0; color: #888; }
+  .trend-up { background: #0d2d14; color: #4ade80; }
+  .trend-down { background: #2d1515; color: var(--red); }
+  .trend-flat { background: #1a2535; color: var(--text-muted); }
   .chart-wrap { width: 100%; height: 180px; position: relative; }
-  .chart-empty { text-align: center; color: #aaa; padding: 40px 0; font-size: 0.85rem; }
+  .chart-empty { text-align: center; color: var(--text-muted); padding: 40px 0; font-size: 0.85rem; }
 
   /* NOTIFICATIONS */
-  .notify-card { background: linear-gradient(135deg, var(--navy), #2a4a6b); border-radius: var(--radius); padding: 28px; margin-bottom: 28px; box-shadow: var(--shadow); color: #fff; }
+  .notify-card { background: linear-gradient(135deg, #0d1e30, #0a1828); border: 1px solid #1e3a52; border-radius: var(--radius); padding: 28px; margin-bottom: 28px; box-shadow: var(--shadow); color: #fff; }
   .notify-title { font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: var(--gold); margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
-  .notify-sub { color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-bottom: 16px; }
-  .notify-urgency { background: rgba(245,200,66,0.15); border: 1px solid rgba(245,200,66,0.45); color: var(--gold); font-weight: 800; font-size: 0.82rem; padding: 10px 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.5; }
+  .notify-sub { color: rgba(255,255,255,0.6); font-size: 0.9rem; margin-bottom: 16px; }
+  .notify-urgency { background: rgba(245,200,66,0.1); border: 1px solid rgba(245,200,66,0.35); color: var(--gold); font-weight: 800; font-size: 0.82rem; padding: 10px 16px; border-radius: 12px; margin-bottom: 20px; line-height: 1.5; }
   .notify-tiers { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 22px; }
-  .notify-tier { background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.15); border-radius: 14px; padding: 16px 20px; flex: 1; min-width: 150px; }
+  .notify-tier { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 16px 20px; flex: 1; min-width: 150px; }
   .notify-tier-pct { font-family: 'Fredoka One', cursive; font-size: 1.6rem; color: var(--gold); }
-  .notify-tier-desc { font-size: 0.8rem; color: rgba(255,255,255,0.75); margin-top: 4px; line-height: 1.4; }
-  .notify-steps { background: rgba(0,0,0,0.25); border-radius: 14px; padding: 18px 20px; margin-bottom: 16px; }
+  .notify-tier-desc { font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-top: 4px; line-height: 1.4; }
+  .notify-steps { background: rgba(0,0,0,0.3); border-radius: 14px; padding: 18px 20px; margin-bottom: 16px; }
   .notify-steps-title { font-weight: 800; color: var(--gold); margin-bottom: 10px; font-size: 0.95rem; }
-  .notify-step { display: flex; gap: 10px; margin-bottom: 10px; font-size: 0.85rem; line-height: 1.5; color: rgba(255,255,255,0.85); }
+  .notify-step { display: flex; gap: 10px; margin-bottom: 10px; font-size: 0.85rem; line-height: 1.5; color: rgba(255,255,255,0.8); }
   .notify-step:last-child { margin-bottom: 0; }
   .notify-step-num { background: var(--gold); color: var(--navy); width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.75rem; flex-shrink: 0; }
-  .notify-wallet { background: rgba(0,0,0,0.3); border-radius: 10px; padding: 10px 14px; font-size: 0.78rem; font-family: monospace; color: rgba(255,255,255,0.85); word-break: break-all; margin: 10px 0; }
+  .notify-wallet { background: rgba(0,0,0,0.4); border: 1px solid #1e3a52; border-radius: 10px; padding: 10px 14px; font-size: 0.78rem; font-family: monospace; color: rgba(255,255,255,0.8); word-break: break-all; margin: 10px 0; }
   .notify-cta-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--navy); border: none; border-radius: 50px; padding: 12px 26px; font-family: 'Fredoka One', cursive; font-size: 1rem; cursor: pointer; transition: transform 0.15s; text-decoration: none; }
   .notify-cta-btn:hover { transform: translateY(-2px) scale(1.02); }
-  .copy-btn-sm { background: rgba(255,255,255,0.15); color: #fff; border: 1px solid rgba(255,255,255,0.3); border-radius: 50px; padding: 6px 14px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.78rem; cursor: pointer; margin-left: 8px; }
+  .copy-btn-sm { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); border-radius: 50px; padding: 6px 14px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.78rem; cursor: pointer; margin-left: 8px; }
 
   /* CALCULATOR */
-  .calc-card { background: var(--card); border: 3px solid var(--green); border-radius: var(--radius); padding: 24px; margin-bottom: 28px; box-shadow: var(--shadow); transition: background 0.25s ease, border-color 0.25s ease; }
+  .calc-card { background: var(--card); border: 2px solid #1e3d28; border-radius: var(--radius); padding: 24px; margin-bottom: 28px; box-shadow: var(--shadow); }
   .calc-intro { margin-bottom: 22px; }
-  .calc-intro-title { font-family: 'Fredoka One', cursive; font-size: 1.2rem; margin-bottom: 12px; color: var(--navy); }
+  .calc-intro-title { font-family: 'Fredoka One', cursive; font-size: 1.2rem; margin-bottom: 12px; color: #f0f4f8; }
   .calc-base-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
-  .calc-base-item { background: #f5fff6; border: 2px solid #d8f0da; border-radius: 14px; padding: 14px 10px; text-align: center; display: flex; flex-direction: column; gap: 4px; transition: background 0.25s ease, border-color 0.25s ease; }
+  .calc-base-item { background: #1a2e1e; border: 1px solid #2a4a30; border-radius: 14px; padding: 14px 10px; text-align: center; display: flex; flex-direction: column; gap: 4px; }
   .calc-base-icon { font-size: 1.5rem; }
-  .calc-base-val { font-family: 'Fredoka One', cursive; font-size: 1.2rem; color: var(--navy); }
-  .calc-base-label { font-size: 0.72rem; color: #888; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-  .calc-input-row { margin-bottom: 18px; padding-top: 14px; border-top: 2px dashed #eee; }
-  .calc-input-label { display: block; font-weight: 800; font-size: 0.9rem; margin-bottom: 8px; color: var(--navy); }
+  .calc-base-val { font-family: 'Fredoka One', cursive; font-size: 1.2rem; color: #f0f4f8; }
+  .calc-base-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .calc-input-row { margin-bottom: 18px; padding-top: 14px; border-top: 1px dashed #2c3b4d; }
+  .calc-input-label { display: block; font-weight: 800; font-size: 0.9rem; margin-bottom: 8px; color: #f0f4f8; }
   .calc-input-wrap { position: relative; display: flex; align-items: center; }
-  .calc-input { width: 100%; padding: 14px 70px 14px 18px; border: 2px solid var(--green); border-radius: 50px; font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: var(--navy); outline: none; background: var(--card); }
-  .calc-input-suffix { position: absolute; right: 20px; font-weight: 700; color: #999; font-size: 0.9rem; }
+  .calc-input { width: 100%; padding: 14px 70px 14px 18px; border: 2px solid #2a5a36; border-radius: 50px; font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: #f0f4f8; outline: none; background: #0f1a14; }
+  .calc-input-suffix { position: absolute; right: 20px; font-weight: 700; color: var(--text-muted); font-size: 0.9rem; }
   .calc-results { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-bottom: 14px; }
-  .calc-result-row { background: linear-gradient(135deg, #f0fff2, #fff); border: 2px solid var(--green); border-radius: 14px; padding: 14px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+  .calc-result-row { background: #1a2e1e; border: 1px solid #2a4a30; border-radius: 14px; padding: 14px; display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
   .calc-result-icon { font-size: 1.6rem; }
-  .calc-result-label { font-size: 0.72rem; color: #888; font-weight: 700; text-transform: uppercase; }
-  .calc-result-val { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: #27ae60; }
-  .calc-note { font-size: 0.75rem; color: #aaa; text-align: center; line-height: 1.5; }
+  .calc-result-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
+  .calc-result-val { font-family: 'Fredoka One', cursive; font-size: 1.3rem; color: #4ade80; }
+  .calc-note { font-size: 0.75rem; color: var(--text-muted); text-align: center; line-height: 1.5; }
 
   /* KINS TIER TABLE */
-  .kins-tier-section { margin-top: 22px; padding-top: 18px; border-top: 2px dashed #eee; }
-  .kins-tier-title { font-family: 'Fredoka One', cursive; font-size: 1.05rem; color: var(--navy); margin-bottom: 12px; }
+  .kins-tier-section { margin-top: 22px; padding-top: 18px; border-top: 1px dashed #2c3b4d; }
+  .kins-tier-title { font-family: 'Fredoka One', cursive; font-size: 1.05rem; color: #f0f4f8; margin-bottom: 12px; }
   .kins-tier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 10px; }
-  .kins-tier-item { background: #fffaf0; border: 2px solid #f0e0b0; border-radius: 14px; padding: 12px 10px; text-align: center; display: flex; flex-direction: column; gap: 4px; transition: background 0.25s ease, border-color 0.25s ease; }
-  .kins-tier-amt { font-family: 'Fredoka One', cursive; font-size: 1.05rem; color: var(--navy); }
-  .kins-tier-limit { font-size: 0.78rem; color: #b8860b; font-weight: 800; }
-  .kins-tier-note { font-size: 0.74rem; color: #aaa; line-height: 1.5; text-align: center; }
+  .kins-tier-item { background: #211a0a; border: 1px solid #3d3010; border-radius: 14px; padding: 12px 10px; text-align: center; display: flex; flex-direction: column; gap: 4px; }
+  .kins-tier-amt { font-family: 'Fredoka One', cursive; font-size: 1.05rem; color: #f0f4f8; }
+  .kins-tier-limit { font-size: 0.78rem; color: var(--gold); font-weight: 800; }
+  .kins-tier-note { font-size: 0.74rem; color: var(--text-muted); line-height: 1.5; text-align: center; }
 
   /* MATERIALS PRICE TRACKER */
-  .materials-price-card { background: var(--card); border: 3px solid var(--orange); border-radius: var(--radius); padding: 24px; margin-bottom: 28px; box-shadow: var(--shadow); transition: background 0.25s ease, border-color 0.25s ease; }
+  .materials-price-card { background: var(--card); border: 2px solid #3d2e10; border-radius: var(--radius); padding: 24px; margin-bottom: 28px; box-shadow: var(--shadow); }
   .materials-price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 12px; }
-  .materials-price-item { background: #fff8f0; border: 2px solid #fde0c0; border-radius: 14px; padding: 14px 10px; text-align: center; display: flex; flex-direction: column; gap: 4px; align-items: center; transition: background 0.25s ease, border-color 0.25s ease; }
+  .materials-price-item { background: #1e1608; border: 1px solid #3a2c14; border-radius: 14px; padding: 14px 10px; text-align: center; display: flex; flex-direction: column; gap: 4px; align-items: center; }
   .materials-price-icon { font-size: 1.5rem; }
-  .materials-price-label { font-size: 0.7rem; color: #888; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
-  .materials-price-val { font-family: 'Fredoka One', cursive; font-size: 1rem; color: var(--navy); }
+  .materials-price-label { font-size: 0.7rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+  .materials-price-val { font-family: 'Fredoka One', cursive; font-size: 1rem; color: #f0f4f8; }
   .materials-price-trend { font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 10px; }
-  .materials-price-note { font-size: 0.75rem; color: #aaa; text-align: center; line-height: 1.5; }
+  .materials-price-note { font-size: 0.75rem; color: var(--text-muted); text-align: center; line-height: 1.5; }
 
   /* ROI ESTIMATOR */
-  .roi-card { background: var(--card); border: 3px solid var(--sky); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); transition: background 0.25s ease, border-color 0.25s ease; }
+  .roi-card { background: var(--card); border: 2px solid #1e3a52; border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); }
   .roi-results { margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
-  .roi-row { display: flex; justify-content: space-between; align-items: center; background: #f4faff; border: 2px solid #dceefb; border-radius: 12px; padding: 12px 16px; font-size: 0.88rem; font-weight: 700; color: var(--navy); transition: background 0.25s ease, border-color 0.25s ease; }
-  .roi-row.roi-highlight { background: #fffaf0; border-color: #f0e0b0; }
+  .roi-row { display: flex; justify-content: space-between; align-items: center; background: #111e2c; border: 1px solid var(--border); border-radius: 12px; padding: 12px 16px; font-size: 0.88rem; font-weight: 700; color: #e8edf2; }
+  .roi-row.roi-highlight { background: #1e1a0a; border-color: #3d3010; }
   .roi-val { font-family: 'Fredoka One', cursive; font-size: 1.05rem; }
-  .roi-positive { color: #27ae60; }
+  .roi-positive { color: #4ade80; }
   .roi-negative { color: var(--red); }
-  .roi-note { font-size: 0.75rem; color: #aaa; text-align: center; line-height: 1.5; margin-top: 12px; }
-  .roi-pending { text-align: center; color: #aaa; font-size: 0.85rem; padding: 16px 0; }
+  .roi-note { font-size: 0.75rem; color: var(--text-muted); text-align: center; line-height: 1.5; margin-top: 12px; }
+  .roi-pending { text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 16px 0; }
 
-  .follow-banner { background: linear-gradient(135deg, #000, #1a1a2e); border-radius: var(--radius); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; border: 2px solid #333; }
+  .follow-banner { background: linear-gradient(135deg, #080808, #0f0f1e); border-radius: var(--radius); padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; border: 1px solid #222; }
   .follow-text { color: #fff; }
   .follow-text strong { font-family: 'Fredoka One', cursive; font-size: 1.2rem; color: var(--gold); display: block; }
-  .follow-text span { font-size: 0.85rem; color: rgba(255,255,255,0.6); }
-  .follow-x-btn { display: inline-flex; align-items: center; gap: 10px; background: #fff; color: #000; font-family: 'Fredoka One', cursive; font-size: 1rem; padding: 12px 24px; border-radius: 50px; text-decoration: none; transition: transform 0.15s, box-shadow 0.15s; white-space: nowrap; flex-shrink: 0; }
-  .follow-x-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,255,255,0.2); }
+  .follow-text span { font-size: 0.85rem; color: rgba(255,255,255,0.5); }
+  .follow-x-btn { display: inline-flex; align-items: center; gap: 10px; background: #f0f4f8; color: #000; font-family: 'Fredoka One', cursive; font-size: 1rem; padding: 12px 24px; border-radius: 50px; text-decoration: none; transition: transform 0.15s, box-shadow 0.15s; white-space: nowrap; flex-shrink: 0; }
+  .follow-x-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,255,255,0.1); }
   .follow-x-btn svg { width: 18px; height: 18px; fill: #000; }
 
-  footer { background: var(--navy); color: rgba(255,255,255,0.5); text-align: center; padding: 20px; font-size: 0.8rem; font-weight: 600; }
+  footer { background: #060c12; color: rgba(255,255,255,0.4); text-align: center; padding: 20px; font-size: 0.8rem; font-weight: 600; border-top: 1px solid #1a2535; }
   footer a { color: var(--sky); text-decoration: none; }
 
-  .loading { display: inline-block; width: 18px; height: 18px; border: 3px solid #eee; border-top-color: var(--sky); border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; }
+  .loading { display: inline-block; width: 18px; height: 18px; border: 3px solid #1a2535; border-top-color: var(--sky); border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: middle; }
   @keyframes spin { to { transform: rotate(360deg); } }
-  .refresh-badge { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: #aaa; font-weight: 700; margin-bottom: 20px; }
-
-  /* ─── NIGHT MODE ─── */
-  body.dark-mode { background: #0f1620; color: #e8edf2; }
-  body.dark-mode .safe-bar { background: #10301c; border-bottom-color: #1d4a2c; color: #7bdb8e; }
-  body.dark-mode .section-title { color: #f0f4f8; }
-  body.dark-mode .merchant-card { background: linear-gradient(135deg, #241d0a, #1c1812); border-color: #a8842a; }
-  body.dark-mode .merchant-title, body.dark-mode .gold-price-value, body.dark-mode .calc-intro-title,
-  body.dark-mode .calc-input-label, body.dark-mode .resource-pct, body.dark-mode .kins-tier-title,
-  body.dark-mode .kins-tier-amt, body.dark-mode .calc-result-val { color: #f0f4f8; }
-  body.dark-mode .merchant-subtitle, body.dark-mode .resource-count { color: #8d9aa8; }
-  body.dark-mode .gold-price-card, body.dark-mode .calc-card, body.dark-mode .materials-price-card, body.dark-mode .roi-card {
-    background: #16202c; border-color: #2c3b4d;
-  }
-  body.dark-mode .calc-base-item, body.dark-mode .calc-result-row {
-    background: #1c2733; border-color: #2c3b4d;
-  }
-  body.dark-mode .calc-base-val { color: #f0f4f8; }
-  body.dark-mode .calc-base-label, body.dark-mode .calc-note, body.dark-mode .roi-note,
-  body.dark-mode .materials-price-note, body.dark-mode .kins-tier-note, body.dark-mode .calc-result-label,
-  body.dark-mode .materials-price-label { color: #7a8898; }
-  body.dark-mode .bar-track { background: #222d39; border-color: #2c3b4d; }
-  body.dark-mode .kins-tier-item { background: #241f14; border-color: #4a3c1a; }
-  body.dark-mode .materials-price-item { background: #241c14; border-color: #4a3a22; }
-  body.dark-mode .materials-price-val { color: #f0f4f8; }
-  body.dark-mode .roi-row { background: #182536; border-color: #2c3b4d; color: #f0f4f8; }
-  body.dark-mode .roi-row.roi-highlight { background: #241f14; border-color: #4a3c1a; }
-  body.dark-mode .calc-input, body.dark-mode .chart-empty, body.dark-mode .roi-pending { background: #16202c; color: #e8edf2; }
-  body.dark-mode .calc-input-suffix { color: #7a8898; }
-  body.dark-mode footer { background: #080c12; }
-  body.dark-mode .gold-price-trend.trend-flat { background: #222d39; color: #8d9aa8; }
+  .refresh-badge { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: var(--text-muted); font-weight: 700; margin-bottom: 20px; }
 
   @media(max-width:600px) {
     .hero h1 { font-size: 2rem; }
@@ -239,7 +210,6 @@
   <a href="https://kintara.gg" target="_blank" class="play-now-btn">▶️ Play Kintara Now</a>
   <div class="hero-badges">
     <div class="safe-badge"><span>🔒</span> No wallet connection — 100% safe</div>
-    <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()">☀️ Day Mode</button>
     <a href="https://x.com/Bald_dood" target="_blank" class="twitter-follow-btn">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
       Follow @Bald_dood
@@ -432,11 +402,11 @@
           <div class="kins-tier-title">🎫 KINS Holding → Daily Exchange Eligibility</div>
           <div class="kins-tier-grid">
             <div class="kins-tier-item"><span class="kins-tier-amt">1,000 KINS</span><span class="kins-tier-limit">1 gold / day</span></div>
-            <div class="kins-tier-item"><span class="kins-tier-amt">5,000 KINS</span><span class="kins-tier-limit">5 gold / day</span></div>
-            <div class="kins-tier-item"><span class="kins-tier-amt">10,000 KINS</span><span class="kins-tier-limit">10 gold / day</span></div>
-            <div class="kins-tier-item"><span class="kins-tier-amt">100,000 KINS</span><span class="kins-tier-limit">Unlimited*</span></div>
+            <div class="kins-tier-item"><span class="kins-tier-amt">5,000 KINS</span><span class="kins-tier-limit">3 gold / day</span></div>
+            <div class="kins-tier-item"><span class="kins-tier-amt">10,000 KINS</span><span class="kins-tier-limit">5 gold / day</span></div>
+            <div class="kins-tier-item"><span class="kins-tier-amt">10,000+ KINS</span><span class="kins-tier-limit">Hard cap: 5 gold/day</span></div>
           </div>
-          <div class="kins-tier-note">*Unlimited exchanges until the merchant runs out of gold. All tiers also require having the necessary materials on hand to exchange.</div>
+          <div class="kins-tier-note">Personal Merchant cap is 5 gold/day maximum regardless of KINS held. All tiers require having the necessary materials on hand to exchange.</div>
         </div>
       </div>
     </div>
@@ -502,22 +472,6 @@ async function apiFetch(url) {
   }
 }
 
-// ─── NIGHT MODE ───
-function applyTheme(isDark) {
-  document.body.classList.toggle('dark-mode', isDark);
-  const btn = document.getElementById('theme-toggle-btn');
-  if (btn) btn.textContent = isDark ? '☀️ Day Mode' : '🌙 Night Mode';
-  try { localStorage.setItem('birdeye-theme', isDark ? 'dark' : 'light'); } catch(e) {}
-}
-function toggleTheme() {
-  applyTheme(!document.body.classList.contains('dark-mode'));
-}
-(function initTheme() {
-  let saved = null;
-  try { saved = localStorage.getItem('birdeye-theme'); } catch(e) {}
-  applyTheme(saved !== 'light');
-})();
-
 // ─── MERCHANT ───
 async function loadMerchant() {
   const data = await apiFetch(`${API_GAME}/world/merchant-campaign`);
@@ -577,8 +531,6 @@ function updateETA(avgPct, data) {
 let latestGoldPrice = null;
 
 async function loadGoldPrice() {
-  // Snapshots are written ONLY by the Vercel cron now (every 30 min),
-  // never triggered by visitor page loads, to keep Redis usage efficient.
   const res = await fetch('/api/price-history').catch(()=>null);
   const data = res ? await res.json().catch(()=>null) : null;
   const history = data?.history ?? [];
@@ -640,7 +592,7 @@ function drawChart(history) {
     <svg width="100%" height="${h}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" style="overflow:visible">
       <defs>
         <linearGradient id="priceGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#5BAADC" stop-opacity="0.3"/>
+          <stop offset="0%" stop-color="#5BAADC" stop-opacity="0.25"/>
           <stop offset="100%" stop-color="#5BAADC" stop-opacity="0"/>
         </linearGradient>
       </defs>
@@ -755,8 +707,6 @@ function copyWallet(btn) {
 }
 
 // ─── INIT ───
-// Merchant data refreshes every 60s (free — talks to kintara.gg directly).
-// Price data refreshes every 2 minutes, since the cron only updates it every 30 min anyway.
 async function loadPriceData() {
   await Promise.allSettled([loadGoldPrice(), loadMaterialsPrice()]);
   calculateROI();
