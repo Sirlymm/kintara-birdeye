@@ -239,7 +239,7 @@
   <a href="https://kintara.gg" target="_blank" class="play-now-btn">▶️ Play Kintara Now</a>
   <div class="hero-badges">
     <div class="safe-badge"><span>🔒</span> No wallet connection — 100% safe</div>
-    <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()">🌙 Night Mode</button>
+    <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()">☀️ Day Mode</button>
     <a href="https://x.com/Bald_dood" target="_blank" class="twitter-follow-btn">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.73-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
       Follow @Bald_dood
@@ -515,7 +515,7 @@ function toggleTheme() {
 (function initTheme() {
   let saved = null;
   try { saved = localStorage.getItem('birdeye-theme'); } catch(e) {}
-  applyTheme(saved === 'dark');
+  applyTheme(saved !== 'light');
 })();
 
 // ─── MERCHANT ───
