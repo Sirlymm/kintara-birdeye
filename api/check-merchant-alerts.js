@@ -53,8 +53,11 @@ async function sendTelegramMessage(text) {
   });
 }
 
-// Milestone tiers, defined in ascending order with their own state key and message
+// Milestone tiers, defined in ascending order with their own state key and message.
+// 15% is the earliest alert — gives players a heads up early since the merchant
+// now visits twice a day with halved donation goals, so time windows are shorter.
 const TIERS = [
+  { pct: 15, key: 'sent15', label: '15%', emoji: '🔔', title: 'Merchant Donations Starting!', body: (p) => `Donations are at ${p}% — the merchant cycle has begun, start contributing wood, stone, coal, metal & fish!` },
   { pct: 50, key: 'sent50', label: '50%', emoji: '📢', title: 'Merchant Halfway There!', body: (p) => `Donations are at ${p}% filled — keep contributing wood, stone, coal, metal & fish!` },
   { pct: 75, key: 'sent75', label: '75%', emoji: '⚡', title: 'Merchant Three-Quarters Full!', body: (p) => `Donations are at ${p}% — getting close, keep the momentum going!` },
   { pct: 90, key: 'sent90', label: '90%', emoji: '🚨', title: 'Merchant Almost Ready!', body: (p) => `Donations are at ${p}% — final push needed before he heads out for gold!` },
@@ -100,8 +103,7 @@ export default async function handler(req) {
       }
 
       // Walk tiers from lowest to highest and fire EVERY crossed-but-unsent tier,
-      // so a jump that skips past multiple thresholds in one check (e.g. 68% -> 92%)
-      // still sends the 75% alert instead of silently skipping it.
+      // so a jump that skips past multiple thresholds in one check still fires all of them.
       const sentThisRun = [];
       for (let i = 0; i < TIERS.length; i++) {
         const tier = TIERS[i];
@@ -117,7 +119,8 @@ export default async function handler(req) {
         messageSent = messageSent ? `${messageSent}, ${sentThisRun.join(', ')}` : sentThisRun.join(', ');
       }
 
-      // Reset all tiers if donations dropped back below the lowest tier (new cycle)
+      // Reset all tiers when avgPct drops below the lowest tier (new cycle started).
+      // With 15% as the first tier, this resets when a fresh visit begins.
       if (avgPct < TIERS[0].pct) {
         TIERS.forEach(t => { state[t.key] = false; });
       }
