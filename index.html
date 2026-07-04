@@ -198,6 +198,26 @@
     .follow-banner { flex-direction: column; text-align: center; }
     .notify-tiers { flex-direction: column; }
   }
+
+  /* GLOBAL MERCHANT CALCULATOR */
+  .global-calc-card { background: var(--card); border: 2px solid #3d1e52; border-radius: var(--radius); padding: 24px; margin-bottom: 28px; box-shadow: var(--shadow); }
+  .global-calc-title { font-family: 'Fredoka One', cursive; font-size: 1.2rem; margin-bottom: 6px; color: #f0f4f8; }
+  .global-calc-sub { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 18px; line-height: 1.5; }
+  .global-calc-table { width: 100%; border-collapse: collapse; margin-bottom: 14px; }
+  .global-calc-table th { background: #1e1030; color: var(--gold); font-family: 'Fredoka One', cursive; font-size: 0.85rem; padding: 10px 12px; text-align: center; border: 1px solid #3d1e52; }
+  .global-calc-table th:first-child { text-align: left; }
+  .global-calc-table td { padding: 9px 12px; text-align: center; font-weight: 700; font-size: 0.85rem; border: 1px solid #2a1a3d; color: #e8edf2; }
+  .global-calc-table td:first-child { text-align: left; color: #c8d4e0; font-weight: 800; }
+  .global-calc-table tr:nth-child(even) td { background: #130d1e; }
+  .global-calc-table tr:nth-child(odd) td { background: #0f0a18; }
+  .global-calc-note { font-size: 0.75rem; color: var(--gold); background: rgba(245,200,66,0.08); border: 1px solid rgba(245,200,66,0.25); border-radius: 10px; padding: 10px 14px; line-height: 1.5; }
+  .global-calc-input-row { margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px dashed #2c3b4d; }
+  .global-result-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin-bottom: 12px; }
+  .global-result-item { background: #1a0d2e; border: 1px solid #3d1e52; border-radius: 12px; padding: 12px 8px; text-align: center; display: flex; flex-direction: column; gap: 3px; }
+  .global-result-icon { font-size: 1.4rem; }
+  .global-result-label { font-size: 0.68rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
+  .global-result-val { font-family: 'Fredoka One', cursive; font-size: 1.1rem; color: #c084fc; }
+
 </style>
 </head>
 <body>
@@ -436,6 +456,50 @@
         </div>
         <div class="roi-note">Estimates use the live cheapest marketplace prices above and the current gold price. Actual results will shift as listings change — always double check before trading.</div>
       </div>
+    </div>
+  </div>
+
+  <!-- GLOBAL MERCHANT CALCULATOR -->
+  <div class="section-title">🌍 Global Merchant Donation Calculator</div>
+  <div class="global-calc-card">
+    <div class="global-calc-title">How much do I need to donate to claim gold?</div>
+    <div class="global-calc-sub">The Global Merchant pools a shared 1,500 Gold per visit from community donations. Your contribution points determine how much Gold you can claim. Enter your target Gold below to see how many resources you need to donate.</div>
+
+    <div class="global-calc-input-row">
+      <label for="global-gold-input" class="calc-input-label">How much global gold do you want to claim?</label>
+      <div class="calc-input-wrap">
+        <input type="number" id="global-gold-input" class="calc-input" placeholder="Enter gold amount" min="1" max="1500" value="5" oninput="calculateGlobalDonation()"/>
+        <span class="calc-input-suffix">gold</span>
+      </div>
+    </div>
+
+    <div class="global-result-grid" id="global-result-grid">
+      <div class="global-result-item"><span class="global-result-icon">🪵</span><span class="global-result-label">Wood</span><span class="global-result-val" id="g-wood">10,417</span></div>
+      <div class="global-result-item"><span class="global-result-icon">🪨</span><span class="global-result-label">Stone</span><span class="global-result-val" id="g-stone">6,250</span></div>
+      <div class="global-result-item"><span class="global-result-icon">🖤</span><span class="global-result-label">Coal</span><span class="global-result-val" id="g-coal">4,167</span></div>
+      <div class="global-result-item"><span class="global-result-icon">🐟</span><span class="global-result-label">Cooked Fish</span><span class="global-result-val" id="g-fish">1,667</span></div>
+      <div class="global-result-item"><span class="global-result-icon">⚙️</span><span class="global-result-label">Metal</span><span class="global-result-val" id="g-metal">1,667</span></div>
+    </div>
+
+    <div class="global-calc-note">⚠️ Donate slightly more than the calculated amount to ensure your contribution points cover your target — community competition can affect your final claim. Global pool is capped at 1,500 Gold per visit.</div>
+
+    <div style="margin-top:18px;">
+      <div class="global-calc-title" style="font-size:1rem;margin-bottom:10px;">Quick Reference Table</div>
+      <table class="global-calc-table">
+        <tr>
+          <th>Resource</th>
+          <th>1 Gold</th>
+          <th>2 Gold</th>
+          <th>3 Gold</th>
+          <th>4 Gold</th>
+          <th>5 Gold</th>
+        </tr>
+        <tr><td>🪵 Wood</td><td>2,083</td><td>4,167</td><td>6,250</td><td>8,333</td><td>10,417</td></tr>
+        <tr><td>🪨 Stone</td><td>1,250</td><td>2,500</td><td>3,750</td><td>5,000</td><td>6,250</td></tr>
+        <tr><td>🖤 Coal</td><td>833</td><td>1,667</td><td>2,500</td><td>3,333</td><td>4,167</td></tr>
+        <tr><td>🐟 Cooked Fish</td><td>333</td><td>667</td><td>1,000</td><td>1,333</td><td>1,667</td></tr>
+        <tr><td>⚙️ Metal</td><td>333</td><td>667</td><td>1,000</td><td>1,333</td><td>1,667</td></tr>
+      </table>
     </div>
   </div>
 
@@ -697,6 +761,23 @@ function calculateROI() {
     <div class="roi-row roi-highlight"><span>📈 Estimated ROI</span><span class="roi-val ${roiPct >= 0 ? 'roi-positive' : 'roi-negative'}">${roiPct >= 0 ? '+' : ''}${roiPct.toFixed(1)}%</span></div>
     ${missingPrice ? '<div class="roi-note" style="margin-top:8px">⚠️ Some material prices are currently unavailable (no live listings) — estimate may be incomplete.</div>' : ''}
   `;
+}
+
+
+// ─── GLOBAL MERCHANT DONATION CALCULATOR ───
+const GLOBAL_RATES = { wood: 2083, stone: 1250, coal: 833, fish: 333, metal: 333 };
+
+function calculateGlobalDonation() {
+  const input = document.getElementById('global-gold-input');
+  let goldAmount = parseFloat(input.value);
+  if (isNaN(goldAmount) || goldAmount < 0) goldAmount = 0;
+  if (goldAmount > 1500) goldAmount = 1500;
+
+  document.getElementById('g-wood').textContent  = Math.ceil(GLOBAL_RATES.wood  * goldAmount).toLocaleString();
+  document.getElementById('g-stone').textContent = Math.ceil(GLOBAL_RATES.stone * goldAmount).toLocaleString();
+  document.getElementById('g-coal').textContent  = Math.ceil(GLOBAL_RATES.coal  * goldAmount).toLocaleString();
+  document.getElementById('g-fish').textContent  = Math.ceil(GLOBAL_RATES.fish  * goldAmount).toLocaleString();
+  document.getElementById('g-metal').textContent = Math.ceil(GLOBAL_RATES.metal * goldAmount).toLocaleString();
 }
 
 // ─── COPY ───
