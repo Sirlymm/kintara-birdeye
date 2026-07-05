@@ -1,6 +1,6 @@
 {
   "crons": [
-    { "path": "/api/check-merchant-alerts", "schedule": "*/3 * * * *" },
+    { "path": "/api/check-merchant-alerts", "schedule": "* * * * *" },
     { "path": "/api/track-price", "schedule": "*/30 * * * *" }
   ]
 }
