@@ -53,15 +53,16 @@ async function sendTelegramMessage(text) {
   });
 }
 
-// Milestone tiers, defined in ascending order with their own state key and message.
-// 15% is the earliest alert — gives players a heads up early since the merchant
-// now visits twice a day with halved donation goals, so time windows are shorter.
+// Milestone tiers in ascending order.
+// 5% is the earliest alert — fires as soon as donations begin so the group
+// gets maximum lead time, especially important now the merchant visits twice
+// daily with halved goals and cycles can fill in minutes.
 const TIERS = [
-  { pct: 15, key: 'sent15', label: '15%', emoji: '🔔', title: 'Merchant Donations Starting!', body: (p) => `Donations are at ${p}% — the merchant cycle has begun, start contributing wood, stone, coal, metal & fish!` },
-  { pct: 50, key: 'sent50', label: '50%', emoji: '📢', title: 'Merchant Halfway There!', body: (p) => `Donations are at ${p}% filled — keep contributing wood, stone, coal, metal & fish!` },
-  { pct: 75, key: 'sent75', label: '75%', emoji: '⚡', title: 'Merchant Three-Quarters Full!', body: (p) => `Donations are at ${p}% — getting close, keep the momentum going!` },
-  { pct: 90, key: 'sent90', label: '90%', emoji: '🚨', title: 'Merchant Almost Ready!', body: (p) => `Donations are at ${p}% — final push needed before he heads out for gold!` },
-  { pct: 96, key: 'sent96', label: '96%', emoji: '🔥', title: 'Merchant On The Verge!', body: (p) => `Donations are at ${p}% — practically there, last few contributions will seal it!` },
+  { pct: 5,  key: 'sent5',  label: '5%',  emoji: '🔔', title: 'Merchant Donations Open!',        body: (p) => `Donations are at ${p}% — the merchant cycle has begun! Start contributing wood, stone, coal, metal & fish now!` },
+  { pct: 50, key: 'sent50', label: '50%', emoji: '📢', title: 'Merchant Halfway There!',          body: (p) => `Donations are at ${p}% filled — keep contributing wood, stone, coal, metal & fish!` },
+  { pct: 75, key: 'sent75', label: '75%', emoji: '⚡', title: 'Merchant Three-Quarters Full!',    body: (p) => `Donations are at ${p}% — getting close, keep the momentum going!` },
+  { pct: 90, key: 'sent90', label: '90%', emoji: '🚨', title: 'Merchant Almost Ready!',           body: (p) => `Donations are at ${p}% — final push needed before he heads out for gold!` },
+  { pct: 96, key: 'sent96', label: '96%', emoji: '🔥', title: 'Merchant On The Verge!',           body: (p) => `Donations are at ${p}% — practically there, last few contributions will seal it!` },
 ];
 
 export default async function handler(req) {
@@ -94,7 +95,7 @@ export default async function handler(req) {
     } else if (!isComplete) {
       // Reset the "returned" flag once a fresh collection cycle clearly starts,
       // and announce that donations are open again.
-      if (state.sentReturned && avgPct < 10) {
+      if (state.sentReturned && avgPct < 5) {
         state.sentReturned = false;
         await sendTelegramMessage(
           `🆕 <b>Donations Are Open Again!</b>\n\nThe Traveling Merchant is collecting resources once more — start donating wood, stone, coal, metal & fish to bring him back with gold!\n\n🐘 Tracked live by KINTARA BIRDEYE`
@@ -102,8 +103,7 @@ export default async function handler(req) {
         messageSent = 'reopened';
       }
 
-      // Walk tiers from lowest to highest and fire EVERY crossed-but-unsent tier,
-      // so a jump that skips past multiple thresholds in one check still fires all of them.
+      // Walk tiers from lowest to highest and fire EVERY crossed-but-unsent tier.
       const sentThisRun = [];
       for (let i = 0; i < TIERS.length; i++) {
         const tier = TIERS[i];
@@ -119,8 +119,7 @@ export default async function handler(req) {
         messageSent = messageSent ? `${messageSent}, ${sentThisRun.join(', ')}` : sentThisRun.join(', ');
       }
 
-      // Reset all tiers when avgPct drops below the lowest tier (new cycle started).
-      // With 15% as the first tier, this resets when a fresh visit begins.
+      // Reset all tiers when avgPct drops below 5% — signals a new cycle started.
       if (avgPct < TIERS[0].pct) {
         TIERS.forEach(t => { state[t.key] = false; });
       }
