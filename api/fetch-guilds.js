@@ -7,20 +7,28 @@ const redis = new Redis({
   token: process.env.KV_REST_API_TOKEN,
 });
 
-const KINTARA_HEADERS = {
-  'Origin': 'https://kintara.gg',
-  'Referer': 'https://kintara.gg/play',
-  'Accept': 'application/json',
-  'Content-Type': 'application/json',
-  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36',
-  'Cookie': `__Host-kintara_session=${process.env.KINTARA_SESSION}`,
-};
-
 async function fetchLeaderboard() {
+  const session = process.env.KINTARA_SESSION;
   const res = await fetch('https://kintara.gg/api/guilds/leaderboard', {
-    headers: KINTARA_HEADERS,
+    method: 'GET',
+    headers: new Headers({
+      'Origin': 'https://kintara.gg',
+      'Referer': 'https://kintara.gg/play',
+      'Accept': 'application/json, text/plain, */*',
+      'Accept-Language': 'en-US,en;q=0.9',
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+      'Cookie': `__Host-kintara_session=${session}`,
+      'Sec-Fetch-Dest': 'empty',
+      'Sec-Fetch-Mode': 'cors',
+      'Sec-Fetch-Site': 'same-origin',
+    }),
   });
-  if (!res.ok) throw new Error(`Leaderboard fetch failed: ${res.status}`);
+
+  if (!res.ok) {
+    const body = await res.text().catch(() => '');
+    throw new Error(`Leaderboard fetch failed: ${res.status} — ${body.slice(0, 100)}`);
+  }
+
   const data = await res.json();
   return data?.guilds ?? [];
 }
@@ -34,7 +42,6 @@ export default async function handler(req) {
       return new Response(JSON.stringify({ ok: false, error: 'No guild data returned — session may have expired' }), { status: 200, headers: corsHeaders });
     }
 
-    // Enrich with computed score and rank
     const enriched = guilds.map(g => ({
       ...g,
       totalKills: (g.mobKills || 0) + (g.pvpKills || 0) + (g.bossKills || 0),
@@ -42,11 +49,7 @@ export default async function handler(req) {
     })).sort((a, b) => b.score - a.score)
       .map((g, i) => ({ ...g, rank: i + 1 }));
 
-    const snapshot = {
-      guilds: enriched,
-      fetchedAt: Date.now(),
-    };
-
+    const snapshot = { guilds: enriched, fetchedAt: Date.now() };
     await redis.set('guild-leaderboard', snapshot);
 
     return new Response(JSON.stringify({ ok: true, ...snapshot }), { status: 200, headers: corsHeaders });
