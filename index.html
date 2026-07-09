@@ -863,8 +863,32 @@ function formatNum(n) {
   return n?.toLocaleString() ?? '0';
 }
 
-function msTodays(ms) {
-  return (ms / 86400000).toFixed(1);
+async function fetchAndCacheGuilds() {
+  // Fetch directly from Kintara using the user's browser session cookie
+  try {
+    const res = await fetch('https://kintara.gg/api/guilds/leaderboard', {
+      credentials: 'include',
+      headers: {
+        'Accept': 'application/json',
+        'Origin': 'https://kintara.gg',
+        'Referer': 'https://kintara.gg/play',
+      }
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (!data?.ok || !data?.guilds?.length) return null;
+
+    // Send to our backend to cache in Redis for other visitors
+    fetch('/api/cache-guilds', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ guilds: data.guilds }),
+    }).catch(() => {});
+
+    return data.guilds;
+  } catch (e) {
+    return null;
+  }
 }
 
 async function loadGuilds() {
@@ -873,20 +897,35 @@ async function loadGuilds() {
   const contentEl = document.getElementById('guild-content');
 
   try {
-    // Trigger fresh fetch
-    await fetch('/api/fetch-guilds').catch(() => {});
-    const res = await fetch('/api/guild-data').catch(() => null);
-    const data = res ? await res.json().catch(() => null) : null;
+    // Try fetching directly first (works if user is logged into Kintara)
+    let guilds = await fetchAndCacheGuilds();
 
-    if (!data?.ok || !data?.guilds?.length) {
+    // Fall back to cached data from Redis if direct fetch failed
+    if (!guilds) {
+      const res = await fetch('/api/guild-data').catch(() => null);
+      const data = res ? await res.json().catch(() => null) : null;
+      if (data?.ok && data?.guilds?.length) {
+        guilds = data.guilds;
+      }
+    }
+
+    if (!guilds?.length) {
       loadingEl.style.display = 'none';
       errorEl.style.display = 'block';
-      errorEl.textContent = data?.error || 'Could not load guild data — session may have expired.';
+      errorEl.textContent = 'Guild data unavailable. Visit kintara.gg while logged in to refresh.';
       return;
     }
 
+    // Enrich with score and rank
+    const enriched = guilds.map(g => ({
+      ...g,
+      totalKills: (g.mobKills || 0) + (g.pvpKills || 0) + (g.bossKills || 0),
+      score: (g.bossKills || 0) * 3 + (g.pvpKills || 0) * 2 + (g.mobKills || 0),
+    })).sort((a, b) => b.score - a.score)
+      .map((g, i) => ({ ...g, rank: i + 1 }));
+
     const tbody = document.getElementById('guild-tbody');
-    tbody.innerHTML = data.guilds.map(g => {
+    tbody.innerHTML = enriched.map(g => {
       const animColor = ANIM_COLORS[g.tagAnim] || '#888';
       const rankClass = g.rank <= 3 ? `rank-${g.rank}` : '';
       return `<tr>
@@ -907,10 +946,8 @@ async function loadGuilds() {
       </tr>`;
     }).join('');
 
-    if (data.fetchedAt) {
-      document.getElementById('guild-updated').textContent =
-        `Last updated: ${new Date(data.fetchedAt).toLocaleTimeString()}`;
-    }
+    document.getElementById('guild-updated').textContent =
+      `Last updated: ${new Date().toLocaleTimeString()}`;
 
     loadingEl.style.display = 'none';
     contentEl.style.display = 'block';
@@ -919,28 +956,6 @@ async function loadGuilds() {
     errorEl.style.display = 'block';
     errorEl.textContent = 'Failed to load guild data: ' + err.message;
   }
-}
-
-// ─── COPY ───
-function copyWallet(btn) {
-  navigator.clipboard.writeText('4KrAhzjKrHv8rsvDYbXwueWkDemszAhUXbzPMvweWZD5');
-  btn.textContent = '✅';
-  setTimeout(()=>btn.textContent='📋 Copy', 1500);
-}
-
-// ─── INIT ───
-async function loadPriceData() {
-  await Promise.allSettled([loadGoldPrice(), loadMaterialsPrice()]);
-  calculateROI();
-}
-
-function stampUpdatedTime() {
-  document.getElementById('last-updated').textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
-}
-
-async function init() {
-  await Promise.allSettled([loadMerchant(), loadPriceData()]);
-  stampUpdatedTime();
 }
 
 loadGuilds();
