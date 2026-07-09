@@ -199,6 +199,16 @@
     .notify-tiers { flex-direction: column; }
   }
 
+
+  /* MERCHANT PHASE INFO */
+  .merchant-phase-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 14px; }
+  .merchant-phase-item { background: #0a1520; border: 1px solid var(--border); border-radius: 12px; padding: 12px 10px; text-align: center; }
+  .merchant-phase-val { font-family: 'Fredoka One', cursive; font-size: 1.1rem; color: var(--gold); }
+  .merchant-phase-val.phase-claim { color: #4ade80; }
+  .merchant-phase-val.phase-collect { color: var(--sky); }
+  .merchant-phase-val.phase-empty { color: var(--text-muted); }
+  .merchant-phase-label { font-size: 0.68rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 3px; }
+
   /* GLOBAL MERCHANT CALCULATOR */
   .global-calc-card { background: var(--card); border: 2px solid #3d1e52; border-radius: var(--radius); padding: 24px; margin-bottom: 28px; box-shadow: var(--shadow); }
   .global-calc-title { font-family: 'Fredoka One', cursive; font-size: 1.2rem; margin-bottom: 6px; color: #f0f4f8; }
@@ -356,6 +366,20 @@
             <div class="eta-label">Estimated Return with Gold</div>
             <div class="eta-value" id="eta-value">Calculating...</div>
             <div class="eta-note" id="eta-note">Based on current donation rate</div>
+          </div>
+        </div>
+        <div class="merchant-phase-grid">
+          <div class="merchant-phase-item">
+            <div class="merchant-phase-val" id="phase-val">—</div>
+            <div class="merchant-phase-label">Phase</div>
+          </div>
+          <div class="merchant-phase-item">
+            <div class="merchant-phase-val" id="pool-remaining-val">—</div>
+            <div class="merchant-phase-label">Pool Remaining</div>
+          </div>
+          <div class="merchant-phase-item">
+            <div class="merchant-phase-val" id="cycle-id-val">—</div>
+            <div class="merchant-phase-label">Cycle #</div>
           </div>
         </div>
       </div>
@@ -638,13 +662,40 @@ function updateETA(avgPct, data) {
   const etaEl = document.getElementById('eta-value');
   const noteEl = document.getElementById('eta-note');
   const statusEl = document.getElementById('merchant-status');
-  const isComplete = data?.complete === true || data?.goldTradeEnabled === true || avgPct >= 100;
+  const phaseEl = document.getElementById('phase-val');
+  const poolEl = document.getElementById('pool-remaining-val');
+  const cycleEl = document.getElementById('cycle-id-val');
+
+  // Update phase, pool, and cycle from new API fields
+  const phase = data?.phase || null;
+  const poolRemaining = data?.poolRemaining ?? null;
+  const poolFull = data?.poolFull ?? 1500;
+  const cycleId = data?.cycleId ?? null;
+
+  if (cycleEl && cycleId !== null) cycleEl.textContent = `#${cycleId}`;
+  if (poolEl && poolRemaining !== null) {
+    poolEl.textContent = `${poolRemaining} / ${poolFull}`;
+  }
+  if (phaseEl && phase) {
+    const phaseLabels = {
+      'collect': '📦 Collecting',
+      'claim': '🪙 Claim Open',
+      'cycle_claim': '🪙 Claim Open',
+    };
+    phaseEl.textContent = phaseLabels[phase] || phase;
+    phaseEl.className = 'merchant-phase-val ' + (phase.includes('claim') ? 'phase-claim' : 'phase-collect');
+  }
+
+  const isComplete = data?.complete === true || data?.goldTradeEnabled === true || avgPct >= 100 || phase?.includes('claim');
 
   if (isComplete) {
-    etaEl.textContent = 'Merchant returning soon! 🎉';
-    noteEl.textContent = 'All resources collected — gold incoming!';
+    const goldLeft = poolRemaining !== null ? ` · ${poolRemaining} gold left in pool` : '';
+    etaEl.textContent = phase?.includes('claim') ? 'Claim Open Now! 🪙' : 'Merchant returning soon! 🎉';
+    noteEl.textContent = phase?.includes('claim')
+      ? `Complete daily quests then claim your gold!${goldLeft}`
+      : 'All resources collected — gold incoming!';
     statusEl.className = 'merchant-status status-active';
-    statusEl.textContent = '✅ Returning with Gold!';
+    statusEl.textContent = phase?.includes('claim') ? '🪙 Claim Phase' : '✅ Returning with Gold!';
   } else {
     const remaining = 100 - avgPct;
     const donateRatePerHour = 5;
@@ -656,6 +707,7 @@ function updateETA(avgPct, data) {
     noteEl.textContent = `${Math.round(avgPct)}% avg filled · Donate resources in-game to speed this up!`;
     statusEl.className = 'merchant-status status-empty';
     statusEl.textContent = '⏳ Out of Gold';
+    if (phaseEl) { phaseEl.textContent = '📦 Collecting'; phaseEl.className = 'merchant-phase-val phase-collect'; }
   }
 }
 
