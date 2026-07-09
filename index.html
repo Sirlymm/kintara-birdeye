@@ -218,6 +218,39 @@
   .global-result-label { font-size: 0.68rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; }
   .global-result-val { font-family: 'Fredoka One', cursive; font-size: 1.1rem; color: #c084fc; }
 
+
+  /* GUILD TRACKER */
+  .guild-card { background: var(--card); border: 2px solid #2a1a4a; border-radius: var(--radius); padding: 24px; margin-bottom: 28px; box-shadow: var(--shadow); }
+  .guild-table { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
+  .guild-table th { background: #1a0d2e; color: var(--gold); font-family: 'Fredoka One', cursive; font-size: 0.82rem; padding: 10px 8px; text-align: left; border-bottom: 2px solid #3d1e52; white-space: nowrap; }
+  .guild-table th:not(:first-child) { text-align: right; }
+  .guild-table td { padding: 10px 8px; font-size: 0.82rem; font-weight: 700; border-bottom: 1px solid #1a1a2e; color: #e8edf2; vertical-align: middle; }
+  .guild-table td:not(:first-child) { text-align: right; }
+  .guild-table tr:hover td { background: #1a1030; }
+  .guild-rank { font-family: 'Fredoka One', cursive; font-size: 1rem; color: var(--text-muted); width: 32px; }
+  .guild-rank.rank-1 { color: #ffd700; }
+  .guild-rank.rank-2 { color: #c0c0c0; }
+  .guild-rank.rank-3 { color: #cd7f32; }
+  .guild-tag { display: inline-block; font-family: 'Fredoka One', cursive; font-size: 0.78rem; padding: 2px 8px; border-radius: 6px; background: rgba(255,255,255,0.08); margin-right: 6px; }
+  .guild-name-cell { display: flex; align-items: center; gap: 6px; }
+  .guild-anim-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .guild-stat { color: #c8d4e0; }
+  .guild-stat.kills { color: #ff9f43; }
+  .guild-stat.boss { color: #ff6b6b; }
+  .guild-stat.pvp { color: #5baadc; }
+  .guild-stat.gold { color: var(--gold); }
+  .guild-stat.score { color: #c084fc; font-family: 'Fredoka One', cursive; font-size: 0.95rem; }
+  .guild-life-card { background: #1a0d2e; border: 1px solid #3d1e52; border-radius: 14px; padding: 16px 20px; margin-top: 16px; }
+  .guild-life-title { font-family: 'Fredoka One', cursive; font-size: 1rem; color: #c084fc; margin-bottom: 10px; }
+  .guild-life-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+  .guild-life-item { background: #0f0a18; border: 1px solid #2a1a4a; border-radius: 10px; padding: 10px 12px; text-align: center; }
+  .guild-life-val { font-family: 'Fredoka One', cursive; font-size: 1.1rem; color: #f0f4f8; }
+  .guild-life-label { font-size: 0.68rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; margin-top: 2px; }
+  .guild-error { text-align: center; color: var(--red); font-size: 0.85rem; padding: 20px; }
+  .guild-loading { text-align: center; color: var(--text-muted); font-size: 0.85rem; padding: 20px; }
+  .guild-updated { font-size: 0.72rem; color: var(--text-muted); text-align: right; margin-top: 8px; }
+  @media(max-width:600px) { .guild-table th:nth-child(4), .guild-table td:nth-child(4) { display: none; } }
+
 </style>
 </head>
 <body>
@@ -503,6 +536,41 @@
     </div>
   </div>
 
+  <!-- GUILD TRACKER -->
+  <div class="section-title">🏰 Guild Leaderboard</div>
+  <div class="guild-card">
+    <div id="guild-loading" class="guild-loading"><div class="loading"></div> Loading guild data...</div>
+    <div id="guild-error" class="guild-error" style="display:none"></div>
+    <div id="guild-content" style="display:none">
+      <table class="guild-table" id="guild-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Guild</th>
+            <th>Members</th>
+            <th class="pvp">PvP Kills</th>
+            <th class="kills">Mob Kills</th>
+            <th class="boss">Boss Kills</th>
+            <th class="gold">Total Gold</th>
+            <th class="score">Score</th>
+          </tr>
+        </thead>
+        <tbody id="guild-tbody"></tbody>
+      </table>
+      <div class="guild-life-card" id="guild-life-section" style="display:none">
+        <div class="guild-life-title">⚡ Guild Life — <span id="guild-life-name"></span></div>
+        <div class="guild-life-grid">
+          <div class="guild-life-item"><div class="guild-life-val" id="life-days">—</div><div class="guild-life-label">Days Remaining</div></div>
+          <div class="guild-life-item"><div class="guild-life-val" id="life-state">—</div><div class="guild-life-label">Status</div></div>
+          <div class="guild-life-item"><div class="guild-life-val" id="life-multiplier">—</div><div class="guild-life-label">Burn Rate</div></div>
+          <div class="guild-life-item"><div class="guild-life-val" id="life-members">—</div><div class="guild-life-label">Members</div></div>
+        </div>
+        <div style="margin-top:12px;font-size:0.75rem;color:var(--text-muted);">Daily upkeep: 1,000 🪵 Wood · 750 🪨 Stone · 500 🖤 Coal · 500 🐟 Cooked Fish (×burn rate multiplier)</div>
+      </div>
+      <div class="guild-updated" id="guild-updated"></div>
+    </div>
+  </div>
+
   <div class="follow-banner">
     <div class="follow-text">
       <strong>🐘 Stay updated on BIRDEYE & Kintara!</strong>
@@ -780,6 +848,79 @@ function calculateGlobalDonation() {
   document.getElementById('g-metal').textContent = Math.ceil(GLOBAL_RATES.metal * goldAmount).toLocaleString();
 }
 
+
+// ─── GUILD TRACKER ───
+const ANIM_COLORS = {
+  gold: '#ffd700', fire: '#ff4500', ice: '#00cfff', rainbow: '#ff69b4',
+  lightning: '#ffe14d', tiedye: '#ff69b4', galaxy: '#8a2be2', neon: '#39ff14',
+  toxic: '#7fff00', sunset: '#ff6347', emerald: '#50c878', plasma: '#df00ff',
+  aurora: '#00ffcc', magma: '#ff4500', oceanic: '#006994', vaporwave: '#ff71ce',
+  psychedelic: '#ff00ff', holographic: '#c0c0c0', bubblegum: '#ff85b3',
+};
+
+function formatNum(n) {
+  if (n >= 1000) return (n/1000).toFixed(1) + 'k';
+  return n?.toLocaleString() ?? '0';
+}
+
+function msTodays(ms) {
+  return (ms / 86400000).toFixed(1);
+}
+
+async function loadGuilds() {
+  const loadingEl = document.getElementById('guild-loading');
+  const errorEl = document.getElementById('guild-error');
+  const contentEl = document.getElementById('guild-content');
+
+  try {
+    // Trigger fresh fetch
+    await fetch('/api/fetch-guilds').catch(() => {});
+    const res = await fetch('/api/guild-data').catch(() => null);
+    const data = res ? await res.json().catch(() => null) : null;
+
+    if (!data?.ok || !data?.guilds?.length) {
+      loadingEl.style.display = 'none';
+      errorEl.style.display = 'block';
+      errorEl.textContent = data?.error || 'Could not load guild data — session may have expired.';
+      return;
+    }
+
+    const tbody = document.getElementById('guild-tbody');
+    tbody.innerHTML = data.guilds.map(g => {
+      const animColor = ANIM_COLORS[g.tagAnim] || '#888';
+      const rankClass = g.rank <= 3 ? `rank-${g.rank}` : '';
+      return `<tr>
+        <td><span class="guild-rank ${rankClass}">${g.rank}</span></td>
+        <td>
+          <div class="guild-name-cell">
+            <div class="guild-anim-dot" style="background:${animColor}"></div>
+            <span class="guild-tag" style="color:${g.tagColor}">[${g.tag}]</span>
+            <span>${g.name}</span>
+          </div>
+        </td>
+        <td class="guild-stat">${g.memberCount}/20</td>
+        <td class="guild-stat pvp">${formatNum(g.pvpKills)}</td>
+        <td class="guild-stat kills">${formatNum(g.mobKills)}</td>
+        <td class="guild-stat boss">${formatNum(g.bossKills)}</td>
+        <td class="guild-stat gold">${formatNum(g.totalGold)}</td>
+        <td class="guild-stat score">${formatNum(g.score)}</td>
+      </tr>`;
+    }).join('');
+
+    if (data.fetchedAt) {
+      document.getElementById('guild-updated').textContent =
+        `Last updated: ${new Date(data.fetchedAt).toLocaleTimeString()}`;
+    }
+
+    loadingEl.style.display = 'none';
+    contentEl.style.display = 'block';
+  } catch (err) {
+    loadingEl.style.display = 'none';
+    errorEl.style.display = 'block';
+    errorEl.textContent = 'Failed to load guild data: ' + err.message;
+  }
+}
+
 // ─── COPY ───
 function copyWallet(btn) {
   navigator.clipboard.writeText('4KrAhzjKrHv8rsvDYbXwueWkDemszAhUXbzPMvweWZD5');
@@ -801,6 +942,9 @@ async function init() {
   await Promise.allSettled([loadMerchant(), loadPriceData()]);
   stampUpdatedTime();
 }
+
+loadGuilds();
+setInterval(loadGuilds, 300000);
 
 init();
 setInterval(() => { loadMerchant(); stampUpdatedTime(); }, 60000);
