@@ -958,6 +958,22 @@ async function loadGuilds() {
   }
 }
 
+// ─── PRICE DATA & INIT ───
+async function loadPriceData() {
+  await Promise.allSettled([loadGoldPrice(), loadMaterialsPrice()]);
+  calculateROI();
+}
+
+function stampUpdatedTime() {
+  document.getElementById('last-updated').textContent = `Last updated: ${new Date().toLocaleTimeString()}`;
+}
+
+async function init() {
+  await Promise.allSettled([loadMerchant(), loadPriceData()]);
+  stampUpdatedTime();
+}
+
+
 loadGuilds();
 setInterval(loadGuilds, 300000);
 
